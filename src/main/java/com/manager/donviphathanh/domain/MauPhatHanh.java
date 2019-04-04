@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -39,25 +38,13 @@ public class MauPhatHanh implements Serializable {
     private String name;
 
     @NotNull
-    @Column(name = "user_name", nullable = false)
-    private String userName;
-
-    @NotNull
-    @Column(name = "create_time", nullable = false)
-    private ZonedDateTime createTime;
-
-    @NotNull
-    @Column(name = "update_time", nullable = false)
-    private ZonedDateTime updateTime;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ReportStatus status;
 
-    @NotNull
-    @Column(name = "program", nullable = false)
-    private String program;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private PhamVi phamvi;
 
     @OneToMany(mappedBy = "mauphathanh")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -97,45 +84,6 @@ public class MauPhatHanh implements Serializable {
         this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public MauPhatHanh userName(String userName) {
-        this.userName = userName;
-        return this;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public ZonedDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public MauPhatHanh createTime(ZonedDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public void setCreateTime(ZonedDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public ZonedDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public MauPhatHanh updateTime(ZonedDateTime updateTime) {
-        this.updateTime = updateTime;
-        return this;
-    }
-
-    public void setUpdateTime(ZonedDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public ReportStatus getStatus() {
         return status;
     }
@@ -149,17 +97,17 @@ public class MauPhatHanh implements Serializable {
         this.status = status;
     }
 
-    public String getProgram() {
-        return program;
+    public PhamVi getPhamvi() {
+        return phamvi;
     }
 
-    public MauPhatHanh program(String program) {
-        this.program = program;
+    public MauPhatHanh phamvi(PhamVi phamVi) {
+        this.phamvi = phamVi;
         return this;
     }
 
-    public void setProgram(String program) {
-        this.program = program;
+    public void setPhamvi(PhamVi phamVi) {
+        this.phamvi = phamVi;
     }
 
     public Set<MauPhatHanhTieuChi> getMauphathanhtieuchis() {
@@ -214,11 +162,7 @@ public class MauPhatHanh implements Serializable {
             "id=" + getId() +
             ", mauPhatHanhCode='" + getMauPhatHanhCode() + "'" +
             ", name='" + getName() + "'" +
-            ", userName='" + getUserName() + "'" +
-            ", createTime='" + getCreateTime() + "'" +
-            ", updateTime='" + getUpdateTime() + "'" +
             ", status='" + getStatus() + "'" +
-            ", program='" + getProgram() + "'" +
             "}";
     }
 }

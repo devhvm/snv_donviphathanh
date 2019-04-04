@@ -25,14 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
 import java.util.List;
 
 
-import static com.manager.donviphathanh.web.rest.TestUtil.sameInstant;
 import static com.manager.donviphathanh.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -49,26 +44,11 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 @SpringBootTest(classes = DonviphathanhApp.class)
 public class TieuChiResourceIntTest {
 
-    private static final String DEFAULT_TIEU_CHI_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_TIEU_CHI_CODE = "BBBBBBBBBB";
-
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_CREATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_CREATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_UPDATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_UPDATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
     private static final ReportStatus DEFAULT_STATUS = ReportStatus.NEW;
     private static final ReportStatus UPDATED_STATUS = ReportStatus.ACTIVED;
-
-    private static final String DEFAULT_PROGRAM = "AAAAAAAAAA";
-    private static final String UPDATED_PROGRAM = "BBBBBBBBBB";
 
     @Autowired
     private TieuChiRepository tieuChiRepository;
@@ -118,13 +98,8 @@ public class TieuChiResourceIntTest {
      */
     public static TieuChi createEntity(EntityManager em) {
         TieuChi tieuChi = new TieuChi()
-            .tieuChiCode(DEFAULT_TIEU_CHI_CODE)
             .name(DEFAULT_NAME)
-            .userName(DEFAULT_USER_NAME)
-            .createTime(DEFAULT_CREATE_TIME)
-            .updateTime(DEFAULT_UPDATE_TIME)
-            .status(DEFAULT_STATUS)
-            .program(DEFAULT_PROGRAM);
+            .status(DEFAULT_STATUS);
         return tieuChi;
     }
 
@@ -149,13 +124,8 @@ public class TieuChiResourceIntTest {
         List<TieuChi> tieuChiList = tieuChiRepository.findAll();
         assertThat(tieuChiList).hasSize(databaseSizeBeforeCreate + 1);
         TieuChi testTieuChi = tieuChiList.get(tieuChiList.size() - 1);
-        assertThat(testTieuChi.getTieuChiCode()).isEqualTo(DEFAULT_TIEU_CHI_CODE);
         assertThat(testTieuChi.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testTieuChi.getUserName()).isEqualTo(DEFAULT_USER_NAME);
-        assertThat(testTieuChi.getCreateTime()).isEqualTo(DEFAULT_CREATE_TIME);
-        assertThat(testTieuChi.getUpdateTime()).isEqualTo(DEFAULT_UPDATE_TIME);
         assertThat(testTieuChi.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testTieuChi.getProgram()).isEqualTo(DEFAULT_PROGRAM);
     }
 
     @Test
@@ -180,86 +150,10 @@ public class TieuChiResourceIntTest {
 
     @Test
     @Transactional
-    public void checkTieuChiCodeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiRepository.findAll().size();
-        // set the field null
-        tieuChi.setTieuChiCode(null);
-
-        // Create the TieuChi, which fails.
-        TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(tieuChi);
-
-        restTieuChiMockMvc.perform(post("/api/tieu-chis")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChi> tieuChiList = tieuChiRepository.findAll();
-        assertThat(tieuChiList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = tieuChiRepository.findAll().size();
         // set the field null
         tieuChi.setName(null);
-
-        // Create the TieuChi, which fails.
-        TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(tieuChi);
-
-        restTieuChiMockMvc.perform(post("/api/tieu-chis")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChi> tieuChiList = tieuChiRepository.findAll();
-        assertThat(tieuChiList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUserNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiRepository.findAll().size();
-        // set the field null
-        tieuChi.setUserName(null);
-
-        // Create the TieuChi, which fails.
-        TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(tieuChi);
-
-        restTieuChiMockMvc.perform(post("/api/tieu-chis")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChi> tieuChiList = tieuChiRepository.findAll();
-        assertThat(tieuChiList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCreateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiRepository.findAll().size();
-        // set the field null
-        tieuChi.setCreateTime(null);
-
-        // Create the TieuChi, which fails.
-        TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(tieuChi);
-
-        restTieuChiMockMvc.perform(post("/api/tieu-chis")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChi> tieuChiList = tieuChiRepository.findAll();
-        assertThat(tieuChiList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUpdateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiRepository.findAll().size();
-        // set the field null
-        tieuChi.setUpdateTime(null);
 
         // Create the TieuChi, which fails.
         TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(tieuChi);
@@ -294,25 +188,6 @@ public class TieuChiResourceIntTest {
 
     @Test
     @Transactional
-    public void checkProgramIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiRepository.findAll().size();
-        // set the field null
-        tieuChi.setProgram(null);
-
-        // Create the TieuChi, which fails.
-        TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(tieuChi);
-
-        restTieuChiMockMvc.perform(post("/api/tieu-chis")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChi> tieuChiList = tieuChiRepository.findAll();
-        assertThat(tieuChiList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllTieuChis() throws Exception {
         // Initialize the database
         tieuChiRepository.saveAndFlush(tieuChi);
@@ -322,13 +197,8 @@ public class TieuChiResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(tieuChi.getId().intValue())))
-            .andExpect(jsonPath("$.[*].tieuChiCode").value(hasItem(DEFAULT_TIEU_CHI_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].createTime").value(hasItem(sameInstant(DEFAULT_CREATE_TIME))))
-            .andExpect(jsonPath("$.[*].updateTime").value(hasItem(sameInstant(DEFAULT_UPDATE_TIME))))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].program").value(hasItem(DEFAULT_PROGRAM.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @Test
@@ -342,13 +212,8 @@ public class TieuChiResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(tieuChi.getId().intValue()))
-            .andExpect(jsonPath("$.tieuChiCode").value(DEFAULT_TIEU_CHI_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME.toString()))
-            .andExpect(jsonPath("$.createTime").value(sameInstant(DEFAULT_CREATE_TIME)))
-            .andExpect(jsonPath("$.updateTime").value(sameInstant(DEFAULT_UPDATE_TIME)))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.program").value(DEFAULT_PROGRAM.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -372,13 +237,8 @@ public class TieuChiResourceIntTest {
         // Disconnect from session so that the updates on updatedTieuChi are not directly saved in db
         em.detach(updatedTieuChi);
         updatedTieuChi
-            .tieuChiCode(UPDATED_TIEU_CHI_CODE)
             .name(UPDATED_NAME)
-            .userName(UPDATED_USER_NAME)
-            .createTime(UPDATED_CREATE_TIME)
-            .updateTime(UPDATED_UPDATE_TIME)
-            .status(UPDATED_STATUS)
-            .program(UPDATED_PROGRAM);
+            .status(UPDATED_STATUS);
         TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(updatedTieuChi);
 
         restTieuChiMockMvc.perform(put("/api/tieu-chis")
@@ -390,13 +250,8 @@ public class TieuChiResourceIntTest {
         List<TieuChi> tieuChiList = tieuChiRepository.findAll();
         assertThat(tieuChiList).hasSize(databaseSizeBeforeUpdate);
         TieuChi testTieuChi = tieuChiList.get(tieuChiList.size() - 1);
-        assertThat(testTieuChi.getTieuChiCode()).isEqualTo(UPDATED_TIEU_CHI_CODE);
         assertThat(testTieuChi.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testTieuChi.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testTieuChi.getCreateTime()).isEqualTo(UPDATED_CREATE_TIME);
-        assertThat(testTieuChi.getUpdateTime()).isEqualTo(UPDATED_UPDATE_TIME);
         assertThat(testTieuChi.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testTieuChi.getProgram()).isEqualTo(UPDATED_PROGRAM);
     }
 
     @Test

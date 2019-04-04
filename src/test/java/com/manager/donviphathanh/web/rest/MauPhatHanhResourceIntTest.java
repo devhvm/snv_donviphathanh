@@ -25,14 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
 import java.util.List;
 
 
-import static com.manager.donviphathanh.web.rest.TestUtil.sameInstant;
 import static com.manager.donviphathanh.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -55,20 +50,8 @@ public class MauPhatHanhResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_CREATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_CREATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_UPDATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_UPDATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
     private static final ReportStatus DEFAULT_STATUS = ReportStatus.NEW;
     private static final ReportStatus UPDATED_STATUS = ReportStatus.ACTIVED;
-
-    private static final String DEFAULT_PROGRAM = "AAAAAAAAAA";
-    private static final String UPDATED_PROGRAM = "BBBBBBBBBB";
 
     @Autowired
     private MauPhatHanhRepository mauPhatHanhRepository;
@@ -120,11 +103,7 @@ public class MauPhatHanhResourceIntTest {
         MauPhatHanh mauPhatHanh = new MauPhatHanh()
             .mauPhatHanhCode(DEFAULT_MAU_PHAT_HANH_CODE)
             .name(DEFAULT_NAME)
-            .userName(DEFAULT_USER_NAME)
-            .createTime(DEFAULT_CREATE_TIME)
-            .updateTime(DEFAULT_UPDATE_TIME)
-            .status(DEFAULT_STATUS)
-            .program(DEFAULT_PROGRAM);
+            .status(DEFAULT_STATUS);
         return mauPhatHanh;
     }
 
@@ -151,11 +130,7 @@ public class MauPhatHanhResourceIntTest {
         MauPhatHanh testMauPhatHanh = mauPhatHanhList.get(mauPhatHanhList.size() - 1);
         assertThat(testMauPhatHanh.getMauPhatHanhCode()).isEqualTo(DEFAULT_MAU_PHAT_HANH_CODE);
         assertThat(testMauPhatHanh.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testMauPhatHanh.getUserName()).isEqualTo(DEFAULT_USER_NAME);
-        assertThat(testMauPhatHanh.getCreateTime()).isEqualTo(DEFAULT_CREATE_TIME);
-        assertThat(testMauPhatHanh.getUpdateTime()).isEqualTo(DEFAULT_UPDATE_TIME);
         assertThat(testMauPhatHanh.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testMauPhatHanh.getProgram()).isEqualTo(DEFAULT_PROGRAM);
     }
 
     @Test
@@ -218,86 +193,10 @@ public class MauPhatHanhResourceIntTest {
 
     @Test
     @Transactional
-    public void checkUserNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = mauPhatHanhRepository.findAll().size();
-        // set the field null
-        mauPhatHanh.setUserName(null);
-
-        // Create the MauPhatHanh, which fails.
-        MauPhatHanhDTO mauPhatHanhDTO = mauPhatHanhMapper.toDto(mauPhatHanh);
-
-        restMauPhatHanhMockMvc.perform(post("/api/mau-phat-hanhs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(mauPhatHanhDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<MauPhatHanh> mauPhatHanhList = mauPhatHanhRepository.findAll();
-        assertThat(mauPhatHanhList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCreateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = mauPhatHanhRepository.findAll().size();
-        // set the field null
-        mauPhatHanh.setCreateTime(null);
-
-        // Create the MauPhatHanh, which fails.
-        MauPhatHanhDTO mauPhatHanhDTO = mauPhatHanhMapper.toDto(mauPhatHanh);
-
-        restMauPhatHanhMockMvc.perform(post("/api/mau-phat-hanhs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(mauPhatHanhDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<MauPhatHanh> mauPhatHanhList = mauPhatHanhRepository.findAll();
-        assertThat(mauPhatHanhList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUpdateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = mauPhatHanhRepository.findAll().size();
-        // set the field null
-        mauPhatHanh.setUpdateTime(null);
-
-        // Create the MauPhatHanh, which fails.
-        MauPhatHanhDTO mauPhatHanhDTO = mauPhatHanhMapper.toDto(mauPhatHanh);
-
-        restMauPhatHanhMockMvc.perform(post("/api/mau-phat-hanhs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(mauPhatHanhDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<MauPhatHanh> mauPhatHanhList = mauPhatHanhRepository.findAll();
-        assertThat(mauPhatHanhList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkStatusIsRequired() throws Exception {
         int databaseSizeBeforeTest = mauPhatHanhRepository.findAll().size();
         // set the field null
         mauPhatHanh.setStatus(null);
-
-        // Create the MauPhatHanh, which fails.
-        MauPhatHanhDTO mauPhatHanhDTO = mauPhatHanhMapper.toDto(mauPhatHanh);
-
-        restMauPhatHanhMockMvc.perform(post("/api/mau-phat-hanhs")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(mauPhatHanhDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<MauPhatHanh> mauPhatHanhList = mauPhatHanhRepository.findAll();
-        assertThat(mauPhatHanhList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkProgramIsRequired() throws Exception {
-        int databaseSizeBeforeTest = mauPhatHanhRepository.findAll().size();
-        // set the field null
-        mauPhatHanh.setProgram(null);
 
         // Create the MauPhatHanh, which fails.
         MauPhatHanhDTO mauPhatHanhDTO = mauPhatHanhMapper.toDto(mauPhatHanh);
@@ -324,11 +223,7 @@ public class MauPhatHanhResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(mauPhatHanh.getId().intValue())))
             .andExpect(jsonPath("$.[*].mauPhatHanhCode").value(hasItem(DEFAULT_MAU_PHAT_HANH_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].createTime").value(hasItem(sameInstant(DEFAULT_CREATE_TIME))))
-            .andExpect(jsonPath("$.[*].updateTime").value(hasItem(sameInstant(DEFAULT_UPDATE_TIME))))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].program").value(hasItem(DEFAULT_PROGRAM.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @Test
@@ -344,11 +239,7 @@ public class MauPhatHanhResourceIntTest {
             .andExpect(jsonPath("$.id").value(mauPhatHanh.getId().intValue()))
             .andExpect(jsonPath("$.mauPhatHanhCode").value(DEFAULT_MAU_PHAT_HANH_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME.toString()))
-            .andExpect(jsonPath("$.createTime").value(sameInstant(DEFAULT_CREATE_TIME)))
-            .andExpect(jsonPath("$.updateTime").value(sameInstant(DEFAULT_UPDATE_TIME)))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.program").value(DEFAULT_PROGRAM.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -374,11 +265,7 @@ public class MauPhatHanhResourceIntTest {
         updatedMauPhatHanh
             .mauPhatHanhCode(UPDATED_MAU_PHAT_HANH_CODE)
             .name(UPDATED_NAME)
-            .userName(UPDATED_USER_NAME)
-            .createTime(UPDATED_CREATE_TIME)
-            .updateTime(UPDATED_UPDATE_TIME)
-            .status(UPDATED_STATUS)
-            .program(UPDATED_PROGRAM);
+            .status(UPDATED_STATUS);
         MauPhatHanhDTO mauPhatHanhDTO = mauPhatHanhMapper.toDto(updatedMauPhatHanh);
 
         restMauPhatHanhMockMvc.perform(put("/api/mau-phat-hanhs")
@@ -392,11 +279,7 @@ public class MauPhatHanhResourceIntTest {
         MauPhatHanh testMauPhatHanh = mauPhatHanhList.get(mauPhatHanhList.size() - 1);
         assertThat(testMauPhatHanh.getMauPhatHanhCode()).isEqualTo(UPDATED_MAU_PHAT_HANH_CODE);
         assertThat(testMauPhatHanh.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testMauPhatHanh.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testMauPhatHanh.getCreateTime()).isEqualTo(UPDATED_CREATE_TIME);
-        assertThat(testMauPhatHanh.getUpdateTime()).isEqualTo(UPDATED_UPDATE_TIME);
         assertThat(testMauPhatHanh.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testMauPhatHanh.getProgram()).isEqualTo(UPDATED_PROGRAM);
     }
 
     @Test

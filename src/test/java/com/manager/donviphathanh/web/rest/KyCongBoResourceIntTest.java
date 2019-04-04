@@ -25,14 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
 import java.util.List;
 
 
-import static com.manager.donviphathanh.web.rest.TestUtil.sameInstant;
 import static com.manager.donviphathanh.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -55,20 +50,8 @@ public class KyCongBoResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_CREATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_CREATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_UPDATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_UPDATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
     private static final ReportStatus DEFAULT_STATUS = ReportStatus.NEW;
     private static final ReportStatus UPDATED_STATUS = ReportStatus.ACTIVED;
-
-    private static final String DEFAULT_PROGRAM = "AAAAAAAAAA";
-    private static final String UPDATED_PROGRAM = "BBBBBBBBBB";
 
     @Autowired
     private KyCongBoRepository kyCongBoRepository;
@@ -120,11 +103,7 @@ public class KyCongBoResourceIntTest {
         KyCongBo kyCongBo = new KyCongBo()
             .kyCongBoCode(DEFAULT_KY_CONG_BO_CODE)
             .name(DEFAULT_NAME)
-            .userName(DEFAULT_USER_NAME)
-            .createTime(DEFAULT_CREATE_TIME)
-            .updateTime(DEFAULT_UPDATE_TIME)
-            .status(DEFAULT_STATUS)
-            .program(DEFAULT_PROGRAM);
+            .status(DEFAULT_STATUS);
         return kyCongBo;
     }
 
@@ -151,11 +130,7 @@ public class KyCongBoResourceIntTest {
         KyCongBo testKyCongBo = kyCongBoList.get(kyCongBoList.size() - 1);
         assertThat(testKyCongBo.getKyCongBoCode()).isEqualTo(DEFAULT_KY_CONG_BO_CODE);
         assertThat(testKyCongBo.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testKyCongBo.getUserName()).isEqualTo(DEFAULT_USER_NAME);
-        assertThat(testKyCongBo.getCreateTime()).isEqualTo(DEFAULT_CREATE_TIME);
-        assertThat(testKyCongBo.getUpdateTime()).isEqualTo(DEFAULT_UPDATE_TIME);
         assertThat(testKyCongBo.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testKyCongBo.getProgram()).isEqualTo(DEFAULT_PROGRAM);
     }
 
     @Test
@@ -218,86 +193,10 @@ public class KyCongBoResourceIntTest {
 
     @Test
     @Transactional
-    public void checkUserNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = kyCongBoRepository.findAll().size();
-        // set the field null
-        kyCongBo.setUserName(null);
-
-        // Create the KyCongBo, which fails.
-        KyCongBoDTO kyCongBoDTO = kyCongBoMapper.toDto(kyCongBo);
-
-        restKyCongBoMockMvc.perform(post("/api/ky-cong-bos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(kyCongBoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<KyCongBo> kyCongBoList = kyCongBoRepository.findAll();
-        assertThat(kyCongBoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCreateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = kyCongBoRepository.findAll().size();
-        // set the field null
-        kyCongBo.setCreateTime(null);
-
-        // Create the KyCongBo, which fails.
-        KyCongBoDTO kyCongBoDTO = kyCongBoMapper.toDto(kyCongBo);
-
-        restKyCongBoMockMvc.perform(post("/api/ky-cong-bos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(kyCongBoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<KyCongBo> kyCongBoList = kyCongBoRepository.findAll();
-        assertThat(kyCongBoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUpdateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = kyCongBoRepository.findAll().size();
-        // set the field null
-        kyCongBo.setUpdateTime(null);
-
-        // Create the KyCongBo, which fails.
-        KyCongBoDTO kyCongBoDTO = kyCongBoMapper.toDto(kyCongBo);
-
-        restKyCongBoMockMvc.perform(post("/api/ky-cong-bos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(kyCongBoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<KyCongBo> kyCongBoList = kyCongBoRepository.findAll();
-        assertThat(kyCongBoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkStatusIsRequired() throws Exception {
         int databaseSizeBeforeTest = kyCongBoRepository.findAll().size();
         // set the field null
         kyCongBo.setStatus(null);
-
-        // Create the KyCongBo, which fails.
-        KyCongBoDTO kyCongBoDTO = kyCongBoMapper.toDto(kyCongBo);
-
-        restKyCongBoMockMvc.perform(post("/api/ky-cong-bos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(kyCongBoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<KyCongBo> kyCongBoList = kyCongBoRepository.findAll();
-        assertThat(kyCongBoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkProgramIsRequired() throws Exception {
-        int databaseSizeBeforeTest = kyCongBoRepository.findAll().size();
-        // set the field null
-        kyCongBo.setProgram(null);
 
         // Create the KyCongBo, which fails.
         KyCongBoDTO kyCongBoDTO = kyCongBoMapper.toDto(kyCongBo);
@@ -324,11 +223,7 @@ public class KyCongBoResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(kyCongBo.getId().intValue())))
             .andExpect(jsonPath("$.[*].kyCongBoCode").value(hasItem(DEFAULT_KY_CONG_BO_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].createTime").value(hasItem(sameInstant(DEFAULT_CREATE_TIME))))
-            .andExpect(jsonPath("$.[*].updateTime").value(hasItem(sameInstant(DEFAULT_UPDATE_TIME))))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].program").value(hasItem(DEFAULT_PROGRAM.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @Test
@@ -344,11 +239,7 @@ public class KyCongBoResourceIntTest {
             .andExpect(jsonPath("$.id").value(kyCongBo.getId().intValue()))
             .andExpect(jsonPath("$.kyCongBoCode").value(DEFAULT_KY_CONG_BO_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME.toString()))
-            .andExpect(jsonPath("$.createTime").value(sameInstant(DEFAULT_CREATE_TIME)))
-            .andExpect(jsonPath("$.updateTime").value(sameInstant(DEFAULT_UPDATE_TIME)))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.program").value(DEFAULT_PROGRAM.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -374,11 +265,7 @@ public class KyCongBoResourceIntTest {
         updatedKyCongBo
             .kyCongBoCode(UPDATED_KY_CONG_BO_CODE)
             .name(UPDATED_NAME)
-            .userName(UPDATED_USER_NAME)
-            .createTime(UPDATED_CREATE_TIME)
-            .updateTime(UPDATED_UPDATE_TIME)
-            .status(UPDATED_STATUS)
-            .program(UPDATED_PROGRAM);
+            .status(UPDATED_STATUS);
         KyCongBoDTO kyCongBoDTO = kyCongBoMapper.toDto(updatedKyCongBo);
 
         restKyCongBoMockMvc.perform(put("/api/ky-cong-bos")
@@ -392,11 +279,7 @@ public class KyCongBoResourceIntTest {
         KyCongBo testKyCongBo = kyCongBoList.get(kyCongBoList.size() - 1);
         assertThat(testKyCongBo.getKyCongBoCode()).isEqualTo(UPDATED_KY_CONG_BO_CODE);
         assertThat(testKyCongBo.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testKyCongBo.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testKyCongBo.getCreateTime()).isEqualTo(UPDATED_CREATE_TIME);
-        assertThat(testKyCongBo.getUpdateTime()).isEqualTo(UPDATED_UPDATE_TIME);
         assertThat(testKyCongBo.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testKyCongBo.getProgram()).isEqualTo(UPDATED_PROGRAM);
     }
 
     @Test

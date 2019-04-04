@@ -30,30 +30,14 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="user_name" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="create_time" type="datetime">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="update_time" type="datetime">
-                <constraints nullable="false" />
-            </column>
-
             <column name="status" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-
-            <column name="program" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="phamvi_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_mau_phat_hanh_phamvi_id" />
             </column>
-
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="mau_phat_hanh" columnName="create_time" columnDataType="datetime"/>
-        <dropDefaultValue tableName="mau_phat_hanh" columnName="update_time" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 import com.manager.donviphathanh.domain.enumeration.ReportStatus;
@@ -33,25 +32,9 @@ public class TieuChiBaoCao implements Serializable {
     private String tieuChiBaoCaoCode;
 
     @NotNull
-    @Column(name = "user_name", nullable = false)
-    private String userName;
-
-    @NotNull
-    @Column(name = "create_time", nullable = false)
-    private ZonedDateTime createTime;
-
-    @NotNull
-    @Column(name = "update_time", nullable = false)
-    private ZonedDateTime updateTime;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ReportStatus status;
-
-    @NotNull
-    @Column(name = "program", nullable = false)
-    private String program;
 
     @ManyToOne
     @JsonIgnoreProperties("tieuchibaocaos")
@@ -79,45 +62,6 @@ public class TieuChiBaoCao implements Serializable {
         this.tieuChiBaoCaoCode = tieuChiBaoCaoCode;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public TieuChiBaoCao userName(String userName) {
-        this.userName = userName;
-        return this;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public ZonedDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public TieuChiBaoCao createTime(ZonedDateTime createTime) {
-        this.createTime = createTime;
-        return this;
-    }
-
-    public void setCreateTime(ZonedDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public ZonedDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public TieuChiBaoCao updateTime(ZonedDateTime updateTime) {
-        this.updateTime = updateTime;
-        return this;
-    }
-
-    public void setUpdateTime(ZonedDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public ReportStatus getStatus() {
         return status;
     }
@@ -129,19 +73,6 @@ public class TieuChiBaoCao implements Serializable {
 
     public void setStatus(ReportStatus status) {
         this.status = status;
-    }
-
-    public String getProgram() {
-        return program;
-    }
-
-    public TieuChiBaoCao program(String program) {
-        this.program = program;
-        return this;
-    }
-
-    public void setProgram(String program) {
-        this.program = program;
     }
 
     public TieuChi getTieuchi() {
@@ -183,11 +114,7 @@ public class TieuChiBaoCao implements Serializable {
         return "TieuChiBaoCao{" +
             "id=" + getId() +
             ", tieuChiBaoCaoCode='" + getTieuChiBaoCaoCode() + "'" +
-            ", userName='" + getUserName() + "'" +
-            ", createTime='" + getCreateTime() + "'" +
-            ", updateTime='" + getUpdateTime() + "'" +
             ", status='" + getStatus() + "'" +
-            ", program='" + getProgram() + "'" +
             "}";
     }
 }

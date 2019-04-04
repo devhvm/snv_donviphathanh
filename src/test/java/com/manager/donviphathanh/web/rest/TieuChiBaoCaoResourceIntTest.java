@@ -25,14 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
 import java.util.List;
 
 
-import static com.manager.donviphathanh.web.rest.TestUtil.sameInstant;
 import static com.manager.donviphathanh.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -52,20 +47,8 @@ public class TieuChiBaoCaoResourceIntTest {
     private static final String DEFAULT_TIEU_CHI_BAO_CAO_CODE = "AAAAAAAAAA";
     private static final String UPDATED_TIEU_CHI_BAO_CAO_CODE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_USER_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_USER_NAME = "BBBBBBBBBB";
-
-    private static final ZonedDateTime DEFAULT_CREATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_CREATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
-    private static final ZonedDateTime DEFAULT_UPDATE_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_UPDATE_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-
     private static final ReportStatus DEFAULT_STATUS = ReportStatus.NEW;
     private static final ReportStatus UPDATED_STATUS = ReportStatus.ACTIVED;
-
-    private static final String DEFAULT_PROGRAM = "AAAAAAAAAA";
-    private static final String UPDATED_PROGRAM = "BBBBBBBBBB";
 
     @Autowired
     private TieuChiBaoCaoRepository tieuChiBaoCaoRepository;
@@ -116,11 +99,7 @@ public class TieuChiBaoCaoResourceIntTest {
     public static TieuChiBaoCao createEntity(EntityManager em) {
         TieuChiBaoCao tieuChiBaoCao = new TieuChiBaoCao()
             .tieuChiBaoCaoCode(DEFAULT_TIEU_CHI_BAO_CAO_CODE)
-            .userName(DEFAULT_USER_NAME)
-            .createTime(DEFAULT_CREATE_TIME)
-            .updateTime(DEFAULT_UPDATE_TIME)
-            .status(DEFAULT_STATUS)
-            .program(DEFAULT_PROGRAM);
+            .status(DEFAULT_STATUS);
         return tieuChiBaoCao;
     }
 
@@ -146,11 +125,7 @@ public class TieuChiBaoCaoResourceIntTest {
         assertThat(tieuChiBaoCaoList).hasSize(databaseSizeBeforeCreate + 1);
         TieuChiBaoCao testTieuChiBaoCao = tieuChiBaoCaoList.get(tieuChiBaoCaoList.size() - 1);
         assertThat(testTieuChiBaoCao.getTieuChiBaoCaoCode()).isEqualTo(DEFAULT_TIEU_CHI_BAO_CAO_CODE);
-        assertThat(testTieuChiBaoCao.getUserName()).isEqualTo(DEFAULT_USER_NAME);
-        assertThat(testTieuChiBaoCao.getCreateTime()).isEqualTo(DEFAULT_CREATE_TIME);
-        assertThat(testTieuChiBaoCao.getUpdateTime()).isEqualTo(DEFAULT_UPDATE_TIME);
         assertThat(testTieuChiBaoCao.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testTieuChiBaoCao.getProgram()).isEqualTo(DEFAULT_PROGRAM);
     }
 
     @Test
@@ -194,86 +169,10 @@ public class TieuChiBaoCaoResourceIntTest {
 
     @Test
     @Transactional
-    public void checkUserNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiBaoCaoRepository.findAll().size();
-        // set the field null
-        tieuChiBaoCao.setUserName(null);
-
-        // Create the TieuChiBaoCao, which fails.
-        TieuChiBaoCaoDTO tieuChiBaoCaoDTO = tieuChiBaoCaoMapper.toDto(tieuChiBaoCao);
-
-        restTieuChiBaoCaoMockMvc.perform(post("/api/tieu-chi-bao-caos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiBaoCaoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChiBaoCao> tieuChiBaoCaoList = tieuChiBaoCaoRepository.findAll();
-        assertThat(tieuChiBaoCaoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCreateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiBaoCaoRepository.findAll().size();
-        // set the field null
-        tieuChiBaoCao.setCreateTime(null);
-
-        // Create the TieuChiBaoCao, which fails.
-        TieuChiBaoCaoDTO tieuChiBaoCaoDTO = tieuChiBaoCaoMapper.toDto(tieuChiBaoCao);
-
-        restTieuChiBaoCaoMockMvc.perform(post("/api/tieu-chi-bao-caos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiBaoCaoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChiBaoCao> tieuChiBaoCaoList = tieuChiBaoCaoRepository.findAll();
-        assertThat(tieuChiBaoCaoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkUpdateTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiBaoCaoRepository.findAll().size();
-        // set the field null
-        tieuChiBaoCao.setUpdateTime(null);
-
-        // Create the TieuChiBaoCao, which fails.
-        TieuChiBaoCaoDTO tieuChiBaoCaoDTO = tieuChiBaoCaoMapper.toDto(tieuChiBaoCao);
-
-        restTieuChiBaoCaoMockMvc.perform(post("/api/tieu-chi-bao-caos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiBaoCaoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChiBaoCao> tieuChiBaoCaoList = tieuChiBaoCaoRepository.findAll();
-        assertThat(tieuChiBaoCaoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkStatusIsRequired() throws Exception {
         int databaseSizeBeforeTest = tieuChiBaoCaoRepository.findAll().size();
         // set the field null
         tieuChiBaoCao.setStatus(null);
-
-        // Create the TieuChiBaoCao, which fails.
-        TieuChiBaoCaoDTO tieuChiBaoCaoDTO = tieuChiBaoCaoMapper.toDto(tieuChiBaoCao);
-
-        restTieuChiBaoCaoMockMvc.perform(post("/api/tieu-chi-bao-caos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(tieuChiBaoCaoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<TieuChiBaoCao> tieuChiBaoCaoList = tieuChiBaoCaoRepository.findAll();
-        assertThat(tieuChiBaoCaoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkProgramIsRequired() throws Exception {
-        int databaseSizeBeforeTest = tieuChiBaoCaoRepository.findAll().size();
-        // set the field null
-        tieuChiBaoCao.setProgram(null);
 
         // Create the TieuChiBaoCao, which fails.
         TieuChiBaoCaoDTO tieuChiBaoCaoDTO = tieuChiBaoCaoMapper.toDto(tieuChiBaoCao);
@@ -299,11 +198,7 @@ public class TieuChiBaoCaoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(tieuChiBaoCao.getId().intValue())))
             .andExpect(jsonPath("$.[*].tieuChiBaoCaoCode").value(hasItem(DEFAULT_TIEU_CHI_BAO_CAO_CODE.toString())))
-            .andExpect(jsonPath("$.[*].userName").value(hasItem(DEFAULT_USER_NAME.toString())))
-            .andExpect(jsonPath("$.[*].createTime").value(hasItem(sameInstant(DEFAULT_CREATE_TIME))))
-            .andExpect(jsonPath("$.[*].updateTime").value(hasItem(sameInstant(DEFAULT_UPDATE_TIME))))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].program").value(hasItem(DEFAULT_PROGRAM.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
     @Test
@@ -318,11 +213,7 @@ public class TieuChiBaoCaoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(tieuChiBaoCao.getId().intValue()))
             .andExpect(jsonPath("$.tieuChiBaoCaoCode").value(DEFAULT_TIEU_CHI_BAO_CAO_CODE.toString()))
-            .andExpect(jsonPath("$.userName").value(DEFAULT_USER_NAME.toString()))
-            .andExpect(jsonPath("$.createTime").value(sameInstant(DEFAULT_CREATE_TIME)))
-            .andExpect(jsonPath("$.updateTime").value(sameInstant(DEFAULT_UPDATE_TIME)))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.program").value(DEFAULT_PROGRAM.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
 
     @Test
@@ -347,11 +238,7 @@ public class TieuChiBaoCaoResourceIntTest {
         em.detach(updatedTieuChiBaoCao);
         updatedTieuChiBaoCao
             .tieuChiBaoCaoCode(UPDATED_TIEU_CHI_BAO_CAO_CODE)
-            .userName(UPDATED_USER_NAME)
-            .createTime(UPDATED_CREATE_TIME)
-            .updateTime(UPDATED_UPDATE_TIME)
-            .status(UPDATED_STATUS)
-            .program(UPDATED_PROGRAM);
+            .status(UPDATED_STATUS);
         TieuChiBaoCaoDTO tieuChiBaoCaoDTO = tieuChiBaoCaoMapper.toDto(updatedTieuChiBaoCao);
 
         restTieuChiBaoCaoMockMvc.perform(put("/api/tieu-chi-bao-caos")
@@ -364,11 +251,7 @@ public class TieuChiBaoCaoResourceIntTest {
         assertThat(tieuChiBaoCaoList).hasSize(databaseSizeBeforeUpdate);
         TieuChiBaoCao testTieuChiBaoCao = tieuChiBaoCaoList.get(tieuChiBaoCaoList.size() - 1);
         assertThat(testTieuChiBaoCao.getTieuChiBaoCaoCode()).isEqualTo(UPDATED_TIEU_CHI_BAO_CAO_CODE);
-        assertThat(testTieuChiBaoCao.getUserName()).isEqualTo(UPDATED_USER_NAME);
-        assertThat(testTieuChiBaoCao.getCreateTime()).isEqualTo(UPDATED_CREATE_TIME);
-        assertThat(testTieuChiBaoCao.getUpdateTime()).isEqualTo(UPDATED_UPDATE_TIME);
         assertThat(testTieuChiBaoCao.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testTieuChiBaoCao.getProgram()).isEqualTo(UPDATED_PROGRAM);
     }
 
     @Test

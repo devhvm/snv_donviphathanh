@@ -1,16 +1,36 @@
 package com.manager.donviphathanh.service;
 
+import com.manager.donviphathanh.domain.MauPhatHanhTieuChi;
+import com.manager.donviphathanh.repository.MauPhatHanhTieuChiRepository;
 import com.manager.donviphathanh.service.dto.MauPhatHanhTieuChiDTO;
+import com.manager.donviphathanh.service.mapper.MauPhatHanhTieuChiMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 /**
- * Service Interface for managing MauPhatHanhTieuChi.
+ * Service Implementation for managing MauPhatHanhTieuChi.
  */
-public interface MauPhatHanhTieuChiService {
+@Service
+@Transactional
+public class MauPhatHanhTieuChiService {
+
+    private final Logger log = LoggerFactory.getLogger(MauPhatHanhTieuChiService.class);
+
+    private final MauPhatHanhTieuChiRepository mauPhatHanhTieuChiRepository;
+
+    private final MauPhatHanhTieuChiMapper mauPhatHanhTieuChiMapper;
+
+    public MauPhatHanhTieuChiService(MauPhatHanhTieuChiRepository mauPhatHanhTieuChiRepository, MauPhatHanhTieuChiMapper mauPhatHanhTieuChiMapper) {
+        this.mauPhatHanhTieuChiRepository = mauPhatHanhTieuChiRepository;
+        this.mauPhatHanhTieuChiMapper = mauPhatHanhTieuChiMapper;
+    }
 
     /**
      * Save a mauPhatHanhTieuChi.
@@ -18,7 +38,12 @@ public interface MauPhatHanhTieuChiService {
      * @param mauPhatHanhTieuChiDTO the entity to save
      * @return the persisted entity
      */
-    MauPhatHanhTieuChiDTO save(MauPhatHanhTieuChiDTO mauPhatHanhTieuChiDTO);
+    public MauPhatHanhTieuChiDTO save(MauPhatHanhTieuChiDTO mauPhatHanhTieuChiDTO) {
+        log.debug("Request to save MauPhatHanhTieuChi : {}", mauPhatHanhTieuChiDTO);
+        MauPhatHanhTieuChi mauPhatHanhTieuChi = mauPhatHanhTieuChiMapper.toEntity(mauPhatHanhTieuChiDTO);
+        mauPhatHanhTieuChi = mauPhatHanhTieuChiRepository.save(mauPhatHanhTieuChi);
+        return mauPhatHanhTieuChiMapper.toDto(mauPhatHanhTieuChi);
+    }
 
     /**
      * Get all the mauPhatHanhTieuChis.
@@ -26,21 +51,34 @@ public interface MauPhatHanhTieuChiService {
      * @param pageable the pagination information
      * @return the list of entities
      */
-    Page<MauPhatHanhTieuChiDTO> findAll(Pageable pageable);
+    @Transactional(readOnly = true)
+    public Page<MauPhatHanhTieuChiDTO> findAll(Pageable pageable) {
+        log.debug("Request to get all MauPhatHanhTieuChis");
+        return mauPhatHanhTieuChiRepository.findAll(pageable)
+            .map(mauPhatHanhTieuChiMapper::toDto);
+    }
 
 
     /**
-     * Get the "id" mauPhatHanhTieuChi.
+     * Get one mauPhatHanhTieuChi by id.
      *
      * @param id the id of the entity
      * @return the entity
      */
-    Optional<MauPhatHanhTieuChiDTO> findOne(Long id);
+    @Transactional(readOnly = true)
+    public Optional<MauPhatHanhTieuChiDTO> findOne(Long id) {
+        log.debug("Request to get MauPhatHanhTieuChi : {}", id);
+        return mauPhatHanhTieuChiRepository.findById(id)
+            .map(mauPhatHanhTieuChiMapper::toDto);
+    }
 
     /**
-     * Delete the "id" mauPhatHanhTieuChi.
+     * Delete the mauPhatHanhTieuChi by id.
      *
      * @param id the id of the entity
      */
-    void delete(Long id);
+    public void delete(Long id) {
+        log.debug("Request to delete MauPhatHanhTieuChi : {}", id);
+        mauPhatHanhTieuChiRepository.deleteById(id);
+    }
 }

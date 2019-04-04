@@ -26,7 +26,7 @@
     "buildTool": "maven",
     "serverPort": "15052",
     "skipUserManagement": true,
-    "jhipsterVersion": "5.8.1",
+    "jhipsterVersion": "5.8.2",
     "clientPackageManager": "npm",
     "cacheProvider": "hazelcast",
     "jwtSecretKey": "YjlkZjNhZWQyNWJhMzMwNzU1YTYyNmE4ZWFiNTNjYmMzZWE4NjUwM2FlZWUzM2E4M2Q3ZDhlYzYxYjUwY2JmNGFkYTI3ZjY0MzM2NGIxYjFjYzk1MzczMmY3ZTkzMzBmODViOTUzNDlkNTNjM2U5MzEzZmZiYTNlMjViYzU2OGI=",
@@ -39,6 +39,7 @@
     "MauPhatHanhTieuChi",
     "TieuChi",
     "KyCongBo",
-    "TieuChiBaoCao"
+    "TieuChiBaoCao",
+    "PhamVi"
   ]
 }

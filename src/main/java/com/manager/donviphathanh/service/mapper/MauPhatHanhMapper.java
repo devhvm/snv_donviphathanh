@@ -8,10 +8,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity MauPhatHanh and its DTO MauPhatHanhDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {PhamViMapper.class})
 public interface MauPhatHanhMapper extends EntityMapper<MauPhatHanhDTO, MauPhatHanh> {
 
+    @Mapping(source = "phamvi.id", target = "phamviId")
+    MauPhatHanhDTO toDto(MauPhatHanh mauPhatHanh);
 
+    @Mapping(source = "phamviId", target = "phamvi")
     @Mapping(target = "mauphathanhtieuchis", ignore = true)
     MauPhatHanh toEntity(MauPhatHanhDTO mauPhatHanhDTO);
 

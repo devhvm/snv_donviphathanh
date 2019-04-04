@@ -1,5 +1,4 @@
 package com.manager.donviphathanh.service.dto;
-import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,19 +15,7 @@ public class TieuChiBaoCaoDTO implements Serializable {
     private String tieuChiBaoCaoCode;
 
     @NotNull
-    private String userName;
-
-    @NotNull
-    private ZonedDateTime createTime;
-
-    @NotNull
-    private ZonedDateTime updateTime;
-
-    @NotNull
     private ReportStatus status;
-
-    @NotNull
-    private String program;
 
 
     private Long tieuchiId;
@@ -49,44 +36,12 @@ public class TieuChiBaoCaoDTO implements Serializable {
         this.tieuChiBaoCaoCode = tieuChiBaoCaoCode;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public ZonedDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(ZonedDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public ZonedDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(ZonedDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public ReportStatus getStatus() {
         return status;
     }
 
     public void setStatus(ReportStatus status) {
         this.status = status;
-    }
-
-    public String getProgram() {
-        return program;
-    }
-
-    public void setProgram(String program) {
-        this.program = program;
     }
 
     public Long getTieuchiId() {
@@ -123,11 +78,7 @@ public class TieuChiBaoCaoDTO implements Serializable {
         return "TieuChiBaoCaoDTO{" +
             "id=" + getId() +
             ", tieuChiBaoCaoCode='" + getTieuChiBaoCaoCode() + "'" +
-            ", userName='" + getUserName() + "'" +
-            ", createTime='" + getCreateTime() + "'" +
-            ", updateTime='" + getUpdateTime() + "'" +
             ", status='" + getStatus() + "'" +
-            ", program='" + getProgram() + "'" +
             ", tieuchi=" + getTieuchiId() +
             "}";
     }

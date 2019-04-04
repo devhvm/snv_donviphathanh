@@ -1,5 +1,4 @@
 package com.manager.donviphathanh.service.dto;
-import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -19,20 +18,10 @@ public class MauPhatHanhDTO implements Serializable {
     private String name;
 
     @NotNull
-    private String userName;
-
-    @NotNull
-    private ZonedDateTime createTime;
-
-    @NotNull
-    private ZonedDateTime updateTime;
-
-    @NotNull
     private ReportStatus status;
 
-    @NotNull
-    private String program;
 
+    private Long phamviId;
 
     public Long getId() {
         return id;
@@ -58,30 +47,6 @@ public class MauPhatHanhDTO implements Serializable {
         this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public ZonedDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(ZonedDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public ZonedDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(ZonedDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
     public ReportStatus getStatus() {
         return status;
     }
@@ -90,12 +55,12 @@ public class MauPhatHanhDTO implements Serializable {
         this.status = status;
     }
 
-    public String getProgram() {
-        return program;
+    public Long getPhamviId() {
+        return phamviId;
     }
 
-    public void setProgram(String program) {
-        this.program = program;
+    public void setPhamviId(Long phamViId) {
+        this.phamviId = phamViId;
     }
 
     @Override
@@ -125,11 +90,8 @@ public class MauPhatHanhDTO implements Serializable {
             "id=" + getId() +
             ", mauPhatHanhCode='" + getMauPhatHanhCode() + "'" +
             ", name='" + getName() + "'" +
-            ", userName='" + getUserName() + "'" +
-            ", createTime='" + getCreateTime() + "'" +
-            ", updateTime='" + getUpdateTime() + "'" +
             ", status='" + getStatus() + "'" +
-            ", program='" + getProgram() + "'" +
+            ", phamvi=" + getPhamviId() +
             "}";
     }
 }
