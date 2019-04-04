@@ -21,7 +21,7 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 @Entity
 @Table(name = "ky_cong_bo")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class KyCongBo implements Serializable {
+public class KyCongBo extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
