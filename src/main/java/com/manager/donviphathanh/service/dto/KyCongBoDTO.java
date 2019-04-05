@@ -7,7 +7,7 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 /**
  * A DTO for the KyCongBo entity.
  */
-public class KyCongBoDTO extends AbstractAuditingDTO implements Serializable {
+public class KyCongBoDTO implements Serializable {
 
     private Long id;
 
