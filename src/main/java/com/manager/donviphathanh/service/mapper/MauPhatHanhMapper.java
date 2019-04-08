@@ -12,7 +12,6 @@ import org.mapstruct.*;
 public interface MauPhatHanhMapper extends EntityMapper<MauPhatHanhDTO, MauPhatHanh> {
 
     @Mapping(source = "phamvi.id", target = "phamviId")
-    @Mapping(source = "phamvi.mauPhatHanhCode", target = "phamviMauPhatHanhCode")
     MauPhatHanhDTO toDto(MauPhatHanh mauPhatHanh);
 
     @Mapping(source = "phamviId", target = "phamvi")

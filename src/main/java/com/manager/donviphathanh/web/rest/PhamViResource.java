@@ -20,7 +20,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing PhamVi.
@@ -83,16 +82,10 @@ public class PhamViResource {
      * GET  /pham-vis : get all the phamVis.
      *
      * @param pageable the pagination information
-     * @param filter the filter of the request
      * @return the ResponseEntity with status 200 (OK) and the list of phamVis in body
      */
     @GetMapping("/pham-vis")
-    public ResponseEntity<List<PhamViDTO>> getAllPhamVis(Pageable pageable, @RequestParam(required = false) String filter) {
-        if ("mauphathanh-is-null".equals(filter)) {
-            log.debug("REST request to get all PhamVis where mauphathanh is null");
-            return new ResponseEntity<>(phamViService.findAllWhereMauphathanhIsNull(),
-                    HttpStatus.OK);
-        }
+    public ResponseEntity<List<PhamViDTO>> getAllPhamVis(Pageable pageable) {
         log.debug("REST request to get a page of PhamVis");
         Page<PhamViDTO> page = phamViService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pham-vis");

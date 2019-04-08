@@ -1,7 +1,6 @@
 package com.manager.donviphathanh.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -32,10 +31,6 @@ public class PhamVi implements Serializable {
     @NotNull
     @Column(name = "jhi_end", nullable = false)
     private String end;
-
-    @OneToOne(mappedBy = "phamvi")
-    @JsonIgnore
-    private MauPhatHanh mauphathanh;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -70,19 +65,6 @@ public class PhamVi implements Serializable {
 
     public void setEnd(String end) {
         this.end = end;
-    }
-
-    public MauPhatHanh getMauphathanh() {
-        return mauphathanh;
-    }
-
-    public PhamVi mauphathanh(MauPhatHanh mauPhatHanh) {
-        this.mauphathanh = mauPhatHanh;
-        return this;
-    }
-
-    public void setMauphathanh(MauPhatHanh mauPhatHanh) {
-        this.mauphathanh = mauPhatHanh;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
