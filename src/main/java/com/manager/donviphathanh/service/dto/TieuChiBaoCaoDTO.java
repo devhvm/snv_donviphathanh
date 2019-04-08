@@ -7,7 +7,7 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 /**
  * A DTO for the TieuChiBaoCao entity.
  */
-public class TieuChiBaoCaoDTO implements Serializable {
+public class TieuChiBaoCaoDTO extends AbstractAuditingDTO implements Serializable {
 
     private Long id;
 
