@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * A DTO for the PhamVi entity.
  */
-public class PhamViDTO extends AbstractAuditingDTO implements Serializable {
+public class PhamViDTO implements Serializable {
 
     private Long id;
 

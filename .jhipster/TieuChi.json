@@ -50,6 +50,5 @@
         "gateway",
         "donviphathanh"
     ],
-    "microserviceName": "donviphathanh",
-    "enableEntityAudit": true
+    "microserviceName": "donviphathanh"
 }

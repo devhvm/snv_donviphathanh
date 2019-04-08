@@ -22,7 +22,7 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 @Entity
 @Table(name = "tieu_chi")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class TieuChi extends AbstractAuditingEntity implements Serializable {
+public class TieuChi implements Serializable {
 
     private static final long serialVersionUID = 1L;
     

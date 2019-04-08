@@ -16,7 +16,15 @@
             ]
         }
     ],
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "mauPhatHanh",
+            "otherEntityRelationshipName": "phamvi",
+            "relationshipName": "mauphathanh",
+            "ownerSide": false
+        }
+    ],
     "changelogDate": "20190404154009",
     "entityTableName": "pham_vi",
     "dto": "mapstruct",
@@ -29,6 +37,5 @@
         "gateway",
         "donviphathanh"
     ],
-    "microserviceName": "donviphathanh",
-    "enableEntityAudit": true
+    "microserviceName": "donviphathanh"
 }

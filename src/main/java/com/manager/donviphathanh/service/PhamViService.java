@@ -12,7 +12,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing PhamVi.
@@ -58,6 +62,21 @@ public class PhamViService {
             .map(phamViMapper::toDto);
     }
 
+
+
+    /**
+     *  get all the phamVis where Mauphathanh is null.
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true) 
+    public List<PhamViDTO> findAllWhereMauphathanhIsNull() {
+        log.debug("Request to get all phamVis where Mauphathanh is null");
+        return StreamSupport
+            .stream(phamViRepository.findAll().spliterator(), false)
+            .filter(phamVi -> phamVi.getMauphathanh() == null)
+            .map(phamViMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     /**
      * Get one phamVi by id.

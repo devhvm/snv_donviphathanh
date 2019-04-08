@@ -1,6 +1,7 @@
 package com.manager.donviphathanh.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -16,7 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "pham_vi")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class PhamVi extends AbstractAuditingEntity implements Serializable {
+public class PhamVi implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -31,6 +32,10 @@ public class PhamVi extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @Column(name = "jhi_end", nullable = false)
     private String end;
+
+    @OneToOne(mappedBy = "phamvi")
+    @JsonIgnore
+    private MauPhatHanh mauphathanh;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -65,6 +70,19 @@ public class PhamVi extends AbstractAuditingEntity implements Serializable {
 
     public void setEnd(String end) {
         this.end = end;
+    }
+
+    public MauPhatHanh getMauphathanh() {
+        return mauphathanh;
+    }
+
+    public PhamVi mauphathanh(MauPhatHanh mauPhatHanh) {
+        this.mauphathanh = mauPhatHanh;
+        return this;
+    }
+
+    public void setMauphathanh(MauPhatHanh mauPhatHanh) {
+        this.mauphathanh = mauPhatHanh;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
