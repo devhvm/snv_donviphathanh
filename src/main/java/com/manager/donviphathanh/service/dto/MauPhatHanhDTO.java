@@ -23,6 +23,8 @@ public class MauPhatHanhDTO implements Serializable {
 
     private Long phamviId;
 
+    private String phamviMauPhatHanhCode;
+
     public Long getId() {
         return id;
     }
@@ -63,6 +65,14 @@ public class MauPhatHanhDTO implements Serializable {
         this.phamviId = phamViId;
     }
 
+    public String getPhamviMauPhatHanhCode() {
+        return phamviMauPhatHanhCode;
+    }
+
+    public void setPhamviMauPhatHanhCode(String phamViMauPhatHanhCode) {
+        this.phamviMauPhatHanhCode = phamViMauPhatHanhCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -92,6 +102,7 @@ public class MauPhatHanhDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             ", phamvi=" + getPhamviId() +
+            ", phamvi='" + getPhamviMauPhatHanhCode() + "'" +
             "}";
     }
 }

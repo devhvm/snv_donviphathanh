@@ -12,6 +12,7 @@ import org.mapstruct.*;
 public interface TieuChiMapper extends EntityMapper<TieuChiDTO, TieuChi> {
 
     @Mapping(source = "kycongbo.id", target = "kycongboId")
+    @Mapping(source = "kycongbo.kyCongBoCode", target = "kycongboKyCongBoCode")
     TieuChiDTO toDto(TieuChi tieuChi);
 
     @Mapping(target = "tieuchibaocaos", ignore = true)

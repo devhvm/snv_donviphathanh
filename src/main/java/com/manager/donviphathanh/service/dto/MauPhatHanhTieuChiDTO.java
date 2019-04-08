@@ -14,6 +14,8 @@ public class MauPhatHanhTieuChiDTO implements Serializable {
 
     private Long mauphathanhId;
 
+    private String mauphathanhMauPhatHanhCode;
+
     public Long getId() {
         return id;
     }
@@ -36,6 +38,14 @@ public class MauPhatHanhTieuChiDTO implements Serializable {
 
     public void setMauphathanhId(Long mauPhatHanhId) {
         this.mauphathanhId = mauPhatHanhId;
+    }
+
+    public String getMauphathanhMauPhatHanhCode() {
+        return mauphathanhMauPhatHanhCode;
+    }
+
+    public void setMauphathanhMauPhatHanhCode(String mauPhatHanhMauPhatHanhCode) {
+        this.mauphathanhMauPhatHanhCode = mauPhatHanhMauPhatHanhCode;
     }
 
     @Override
@@ -65,6 +75,7 @@ public class MauPhatHanhTieuChiDTO implements Serializable {
             "id=" + getId() +
             ", tieuchi=" + getTieuchiId() +
             ", mauphathanh=" + getMauphathanhId() +
+            ", mauphathanh='" + getMauphathanhMauPhatHanhCode() + "'" +
             "}";
     }
 }

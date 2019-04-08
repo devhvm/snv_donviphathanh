@@ -13,6 +13,7 @@ public interface MauPhatHanhTieuChiMapper extends EntityMapper<MauPhatHanhTieuCh
 
     @Mapping(source = "tieuchi.id", target = "tieuchiId")
     @Mapping(source = "mauphathanh.id", target = "mauphathanhId")
+    @Mapping(source = "mauphathanh.mauPhatHanhCode", target = "mauphathanhMauPhatHanhCode")
     MauPhatHanhTieuChiDTO toDto(MauPhatHanhTieuChi mauPhatHanhTieuChi);
 
     @Mapping(source = "tieuchiId", target = "tieuchi")

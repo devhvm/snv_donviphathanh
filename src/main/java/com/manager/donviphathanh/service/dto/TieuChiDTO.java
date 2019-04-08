@@ -20,6 +20,8 @@ public class TieuChiDTO implements Serializable {
 
     private Long kycongboId;
 
+    private String kycongboKyCongBoCode;
+
     public Long getId() {
         return id;
     }
@@ -52,6 +54,14 @@ public class TieuChiDTO implements Serializable {
         this.kycongboId = kyCongBoId;
     }
 
+    public String getKycongboKyCongBoCode() {
+        return kycongboKyCongBoCode;
+    }
+
+    public void setKycongboKyCongBoCode(String kyCongBoKyCongBoCode) {
+        this.kycongboKyCongBoCode = kyCongBoKyCongBoCode;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -80,6 +90,7 @@ public class TieuChiDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             ", kycongbo=" + getKycongboId() +
+            ", kycongbo='" + getKycongboKyCongBoCode() + "'" +
             "}";
     }
 }
