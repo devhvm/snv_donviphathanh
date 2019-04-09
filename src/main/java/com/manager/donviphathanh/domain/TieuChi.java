@@ -22,13 +22,17 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 @Entity
 @Table(name = "tieu_chi")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class TieuChi extends AbstractAuditingEntity implements Serializable {
+public class TieuChi implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Column(name = "chi_tieu_code", nullable = false)
+    private String chiTieuCode;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -56,6 +60,19 @@ public class TieuChi extends AbstractAuditingEntity implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getChiTieuCode() {
+        return chiTieuCode;
+    }
+
+    public TieuChi chiTieuCode(String chiTieuCode) {
+        this.chiTieuCode = chiTieuCode;
+        return this;
+    }
+
+    public void setChiTieuCode(String chiTieuCode) {
+        this.chiTieuCode = chiTieuCode;
     }
 
     public String getName() {
@@ -172,6 +189,7 @@ public class TieuChi extends AbstractAuditingEntity implements Serializable {
     public String toString() {
         return "TieuChi{" +
             "id=" + getId() +
+            ", chiTieuCode='" + getChiTieuCode() + "'" +
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             "}";

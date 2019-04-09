@@ -44,6 +44,9 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 @SpringBootTest(classes = DonviphathanhApp.class)
 public class TieuChiResourceIntTest {
 
+    private static final String DEFAULT_CHI_TIEU_CODE = "AAAAAAAAAA";
+    private static final String UPDATED_CHI_TIEU_CODE = "BBBBBBBBBB";
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -98,6 +101,7 @@ public class TieuChiResourceIntTest {
      */
     public static TieuChi createEntity(EntityManager em) {
         TieuChi tieuChi = new TieuChi()
+            .chiTieuCode(DEFAULT_CHI_TIEU_CODE)
             .name(DEFAULT_NAME)
             .status(DEFAULT_STATUS);
         return tieuChi;
@@ -124,6 +128,7 @@ public class TieuChiResourceIntTest {
         List<TieuChi> tieuChiList = tieuChiRepository.findAll();
         assertThat(tieuChiList).hasSize(databaseSizeBeforeCreate + 1);
         TieuChi testTieuChi = tieuChiList.get(tieuChiList.size() - 1);
+        assertThat(testTieuChi.getChiTieuCode()).isEqualTo(DEFAULT_CHI_TIEU_CODE);
         assertThat(testTieuChi.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testTieuChi.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
@@ -146,6 +151,25 @@ public class TieuChiResourceIntTest {
         // Validate the TieuChi in the database
         List<TieuChi> tieuChiList = tieuChiRepository.findAll();
         assertThat(tieuChiList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    public void checkChiTieuCodeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = tieuChiRepository.findAll().size();
+        // set the field null
+        tieuChi.setChiTieuCode(null);
+
+        // Create the TieuChi, which fails.
+        TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(tieuChi);
+
+        restTieuChiMockMvc.perform(post("/api/tieu-chis")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(tieuChiDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<TieuChi> tieuChiList = tieuChiRepository.findAll();
+        assertThat(tieuChiList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -197,6 +221,7 @@ public class TieuChiResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(tieuChi.getId().intValue())))
+            .andExpect(jsonPath("$.[*].chiTieuCode").value(hasItem(DEFAULT_CHI_TIEU_CODE.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
@@ -212,6 +237,7 @@ public class TieuChiResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(tieuChi.getId().intValue()))
+            .andExpect(jsonPath("$.chiTieuCode").value(DEFAULT_CHI_TIEU_CODE.toString()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
@@ -237,6 +263,7 @@ public class TieuChiResourceIntTest {
         // Disconnect from session so that the updates on updatedTieuChi are not directly saved in db
         em.detach(updatedTieuChi);
         updatedTieuChi
+            .chiTieuCode(UPDATED_CHI_TIEU_CODE)
             .name(UPDATED_NAME)
             .status(UPDATED_STATUS);
         TieuChiDTO tieuChiDTO = tieuChiMapper.toDto(updatedTieuChi);
@@ -250,6 +277,7 @@ public class TieuChiResourceIntTest {
         List<TieuChi> tieuChiList = tieuChiRepository.findAll();
         assertThat(tieuChiList).hasSize(databaseSizeBeforeUpdate);
         TieuChi testTieuChi = tieuChiList.get(tieuChiList.size() - 1);
+        assertThat(testTieuChi.getChiTieuCode()).isEqualTo(UPDATED_CHI_TIEU_CODE);
         assertThat(testTieuChi.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testTieuChi.getStatus()).isEqualTo(UPDATED_STATUS);
     }

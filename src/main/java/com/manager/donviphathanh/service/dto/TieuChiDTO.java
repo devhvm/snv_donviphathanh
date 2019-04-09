@@ -7,9 +7,12 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 /**
  * A DTO for the TieuChi entity.
  */
-public class TieuChiDTO extends AbstractAuditingDTO implements Serializable {
+public class TieuChiDTO implements Serializable {
 
     private Long id;
+
+    @NotNull
+    private String chiTieuCode;
 
     @NotNull
     private String name;
@@ -28,6 +31,14 @@ public class TieuChiDTO extends AbstractAuditingDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getChiTieuCode() {
+        return chiTieuCode;
+    }
+
+    public void setChiTieuCode(String chiTieuCode) {
+        this.chiTieuCode = chiTieuCode;
     }
 
     public String getName() {
@@ -87,6 +98,7 @@ public class TieuChiDTO extends AbstractAuditingDTO implements Serializable {
     public String toString() {
         return "TieuChiDTO{" +
             "id=" + getId() +
+            ", chiTieuCode='" + getChiTieuCode() + "'" +
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             ", kycongbo=" + getKycongboId() +
