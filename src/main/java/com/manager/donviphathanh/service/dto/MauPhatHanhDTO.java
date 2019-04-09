@@ -7,7 +7,7 @@ import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 /**
  * A DTO for the MauPhatHanh entity.
  */
-public class MauPhatHanhDTO implements Serializable {
+public class MauPhatHanhDTO extends AbstractAuditingDTO implements Serializable {
 
     private Long id;
 
