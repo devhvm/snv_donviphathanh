@@ -10,5 +10,25 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
+    private GateWay gateway;
 
+    public GateWay getGateway() {
+        return gateway;
+    }
+
+    public void setGateway(GateWay gateway) {
+        this.gateway = gateway;
+    }
+
+    public static class GateWay {
+        private String common;
+
+        public String getCommon() {
+            return common;
+        }
+
+        public void setCommon(String common) {
+            this.common = common;
+        }
+    }
 }

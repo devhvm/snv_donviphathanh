@@ -1,9 +1,8 @@
 package com.manager.donviphathanh.config;
 
-import com.manager.donviphathanh.security.*;
-import com.manager.donviphathanh.security.jwt.*;
-
-import org.springframework.context.annotation.Bean;
+import com.manager.donviphathanh.security.AuthoritiesConstants;
+import com.manager.donviphathanh.security.jwt.JWTConfigurer;
+import com.manager.donviphathanh.security.jwt.TokenProvider;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -34,7 +33,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/h2-console/**")
             .antMatchers("/swagger-ui/index.html")
             .antMatchers("/test/**");
     }

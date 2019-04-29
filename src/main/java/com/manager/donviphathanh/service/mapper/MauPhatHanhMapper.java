@@ -1,24 +1,17 @@
 package com.manager.donviphathanh.service.mapper;
 
-import com.manager.donviphathanh.domain.*;
+import com.manager.donviphathanh.domain.MauPhatHanh;
 import com.manager.donviphathanh.service.dto.MauPhatHanhDTO;
-
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
 
 /**
  * Mapper for the entity MauPhatHanh and its DTO MauPhatHanhDTO.
  */
-@Mapper(componentModel = "spring", uses = {PhamViMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface MauPhatHanhMapper extends EntityMapper<MauPhatHanhDTO, MauPhatHanh> {
 
-    @Mapping(source = "phamvi.id", target = "phamviId")
-    MauPhatHanhDTO toDto(MauPhatHanh mauPhatHanh);
 
-    @Mapping(source = "phamviId", target = "phamvi")
-    @Mapping(target = "mauphathanhtieuchis", ignore = true)
-    MauPhatHanh toEntity(MauPhatHanhDTO mauPhatHanhDTO);
-
-    default MauPhatHanh fromId(Long id) {
+    default MauPhatHanh fromId(String id) {
         if (id == null) {
             return null;
         }

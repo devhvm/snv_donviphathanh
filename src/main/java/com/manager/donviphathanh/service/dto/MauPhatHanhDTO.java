@@ -1,33 +1,38 @@
 package com.manager.donviphathanh.service.dto;
-import javax.validation.constraints.*;
+
+import com.manager.donviphathanh.domain.enumeration.Status;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
-import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 
 /**
  * A DTO for the MauPhatHanh entity.
  */
-public class MauPhatHanhDTO extends AbstractAuditingDTO implements Serializable {
+public class MauPhatHanhDTO implements Serializable {
 
-    private Long id;
+    private String id;
 
     @NotNull
     private String mauPhatHanhCode;
+
+    private CustomTypeDTO nhomPhanLoai;
 
     @NotNull
     private String name;
 
     @NotNull
-    private ReportStatus status;
+    private Status status;
 
+    @NotNull
+    private List<TieuChiMauPhatHanhDTO> tieuChiMauPhatHanhs;
 
-    private Long phamviId;
-
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -39,6 +44,14 @@ public class MauPhatHanhDTO extends AbstractAuditingDTO implements Serializable 
         this.mauPhatHanhCode = mauPhatHanhCode;
     }
 
+    public CustomTypeDTO getNhomPhanLoai() {
+        return nhomPhanLoai;
+    }
+
+    public void setNhomPhanLoai(CustomTypeDTO nhomPhanLoai) {
+        this.nhomPhanLoai = nhomPhanLoai;
+    }
+
     public String getName() {
         return name;
     }
@@ -47,21 +60,22 @@ public class MauPhatHanhDTO extends AbstractAuditingDTO implements Serializable 
         this.name = name;
     }
 
-    public ReportStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(ReportStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
-    public Long getPhamviId() {
-        return phamviId;
+    public List<TieuChiMauPhatHanhDTO> getTieuChiMauPhatHanhs() {
+        return tieuChiMauPhatHanhs;
     }
 
-    public void setPhamviId(Long phamViId) {
-        this.phamviId = phamViId;
+    public void setTieuChiMauPhatHanhs(List<TieuChiMauPhatHanhDTO> tieuChiMauPhatHanhs) {
+        this.tieuChiMauPhatHanhs = tieuChiMauPhatHanhs;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -89,9 +103,9 @@ public class MauPhatHanhDTO extends AbstractAuditingDTO implements Serializable 
         return "MauPhatHanhDTO{" +
             "id=" + getId() +
             ", mauPhatHanhCode='" + getMauPhatHanhCode() + "'" +
+            ", nhomPhanLoai='" + getNhomPhanLoai() + "'" +
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
-            ", phamvi=" + getPhamviId() +
             "}";
     }
 }

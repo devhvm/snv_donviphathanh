@@ -7,9 +7,12 @@ jhipster:
     security:
         authentication:
             jwt:
-                secret: my-secret-key-which-should-be-changed-in-production-and-be-base64-encoded
-
+                # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+                base64-secret: YTViYTM1MzQ1OWRjZDZiOTA0OWM3NjQyOTkzZTY0MWJhZDAxMWVmYjE2NTYyY2UzZjY5ZTNkYzAyNjM2ZTUxMTc4Y2I5MzE3ZTU0OWMwZWQwNTMwZmE2N2ZhMjVjMDc4Nzc3Ng==
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
+                token-validity-in-seconds-for-remember-me: 2592000
 eureka:
     client:
         service-url:
-            defaultZone: http://admin:${jhipster.registry.password}@jhipster-registry:8761/eureka/
+            defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/

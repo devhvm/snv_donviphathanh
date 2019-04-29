@@ -1,0 +1,51 @@
+{
+    "name": "DuLieuBaoCao",
+    "fields": [
+        {
+            "fieldName": "revisionId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "duLieu",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "male",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "fmale",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Status",
+            "fieldValues": "NEW,ACTIVE,SIGNED",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190427023352",
+    "entityTableName": "du_lieu_bao_cao",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "donviphathanh",
+    "applications": [
+        "donviphathanh"
+    ],
+    "microserviceName": "donviphathanh"
+}
