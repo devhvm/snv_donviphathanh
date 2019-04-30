@@ -14,7 +14,7 @@ import java.util.Objects;
  * A MauPhatHanh.
  */
 @Document(collection = "mau_phat_hanh")
-public class MauPhatHanh implements Serializable {
+public class MauPhatHanh extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,6 +40,9 @@ public class MauPhatHanh implements Serializable {
     @NotNull
     @Field("tieu_chi_mau_phat_hanh")
     private List<TieuChiMauPhatHanh> tieuChiMauPhatHanhs;
+
+    @Field("tien_trinh_xu_ly")
+    private List<TienTrinhXuLy> tienTrinhXuLyList;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not
     // remove
@@ -121,6 +124,14 @@ public class MauPhatHanh implements Serializable {
 
     public void setNhomPhanLoai(CustomType nhomPhanLoai) {
         this.nhomPhanLoai = nhomPhanLoai;
+    }
+
+    public List<TienTrinhXuLy> getTienTrinhXuLyList() {
+        return tienTrinhXuLyList;
+    }
+
+    public void setTienTrinhXuLyList(List<TienTrinhXuLy> tienTrinhXuLyList) {
+        this.tienTrinhXuLyList = tienTrinhXuLyList;
     }
 
     @Override

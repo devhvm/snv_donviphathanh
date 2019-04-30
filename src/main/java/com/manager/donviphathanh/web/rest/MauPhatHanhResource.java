@@ -41,7 +41,7 @@ public class MauPhatHanhResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new mauPhatHanhDTO, or with status 400 (Bad Request) if the mauPhatHanh has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/mau-phat-hanhs")
+    @PostMapping("/mau-phat-hanh")
     public ResponseEntity<MauPhatHanhDTO> createMauPhatHanh(@Valid @RequestBody CreateMauPhatHanhDTO createMauPhatHanhDTO) throws URISyntaxException {
         log.debug("REST request to save MauPhatHanh : {}", createMauPhatHanhDTO);
 
@@ -52,27 +52,28 @@ public class MauPhatHanhResource {
             .body(result);
     }
 
-//    /**
-//     * PUT  /mau-phat-hanhs : Updates an existing mauPhatHanh.
-//     *
-//     * @param mauPhatHanhDTO the mauPhatHanhDTO to update
-//     * @return the ResponseEntity with status 200 (OK) and with body the updated mauPhatHanhDTO,
-//     * or with status 400 (Bad Request) if the mauPhatHanhDTO is not valid,
-//     * or with status 500 (Internal Server Error) if the mauPhatHanhDTO couldn't be updated
-//     * @throws URISyntaxException if the Location URI syntax is incorrect
-//     */
-//    @PutMapping("/mau-phat-hanhs")
-//    public ResponseEntity<MauPhatHanhDTO> updateMauPhatHanh(@Valid @RequestBody MauPhatHanhDTO mauPhatHanhDTO) throws URISyntaxException {
-//        log.debug("REST request to update MauPhatHanh : {}", mauPhatHanhDTO);
-//        if (mauPhatHanhDTO.getId() == null) {
-//            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-//        }
-//        MauPhatHanhDTO result = mauPhatHanhService.save(mauPhatHanhDTO);
-//        return ResponseEntity.ok()
-//            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, mauPhatHanhDTO.getId().toString()))
-//            .body(result);
-//    }
+    @PostMapping("/mau-phat-hanh/{code}/approve")
+    public ResponseEntity<MauPhatHanhDTO> approveMauPhatHanh(@Valid @RequestBody CreateMauPhatHanhDTO createMauPhatHanhDTO) throws URISyntaxException {
+        log.debug("REST request to save MauPhatHanh : {}", createMauPhatHanhDTO);
 
+        MauPhatHanhDTO result = mauPhatHanhService.create(createMauPhatHanhDTO);
+
+        return ResponseEntity.created(new URI("/api/mau-phat-hanhs/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
+            .body(result);
+    }
+
+    //feedback
+    @PostMapping("/mau-phat-hanh/{code}/feedback")
+    public ResponseEntity<MauPhatHanhDTO> feedbackMauPhatHanh(@Valid @RequestBody CreateMauPhatHanhDTO createMauPhatHanhDTO) throws URISyntaxException {
+        log.debug("REST request to save MauPhatHanh : {}", createMauPhatHanhDTO);
+
+        MauPhatHanhDTO result = mauPhatHanhService.create(createMauPhatHanhDTO);
+
+        return ResponseEntity.created(new URI("/api/mau-phat-hanhs/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
+            .body(result);
+    }
     /**
      * GET  /mau-phat-hanhs : get all the mauPhatHanhs.
      *

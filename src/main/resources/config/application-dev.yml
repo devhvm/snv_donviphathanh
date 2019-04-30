@@ -120,3 +120,4 @@ jhipster:
 application:
     gateway:
         common: http://vtools.xyz:9999/common
+        quytrinhdonvi: http://vtools.xyz:9999/quytrinhdonvi
