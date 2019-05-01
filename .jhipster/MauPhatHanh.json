@@ -9,6 +9,10 @@
             ]
         },
         {
+            "fieldName": "nhomPhanLoai",
+            "fieldType": "String"
+        },
+        {
             "fieldName": "name",
             "fieldType": "String",
             "fieldValidateRules": [
@@ -17,41 +21,24 @@
         },
         {
             "fieldName": "status",
-            "fieldType": "ReportStatus",
-            "fieldValues": "NEW,ACTIVED,CANCELLED,DELETED,SIGNED,COMPLETED",
+            "fieldType": "Status",
+            "fieldValues": "NEW,ACTIVE,SIGNED",
             "fieldValidateRules": [
                 "required"
             ]
         }
     ],
-    "relationships": [
-        {
-            "relationshipType": "one-to-one",
-            "otherEntityName": "phamVi",
-            "otherEntityRelationshipName": "mauPhatHanh",
-            "relationshipName": "phamvi",
-            "otherEntityField": "id",
-            "ownerSide": true
-        },
-        {
-            "relationshipType": "one-to-many",
-            "otherEntityName": "mauPhatHanhTieuChi",
-            "otherEntityRelationshipName": "mauphathanh",
-            "relationshipName": "mauphathanhtieuchi"
-        }
-    ],
-    "changelogDate": "20190404154004",
+    "relationships": [],
+    "changelogDate": "20190427023353",
     "entityTableName": "mau_phat_hanh",
     "dto": "mapstruct",
-    "pagination": "pagination",
-    "service": "serviceClass",
+    "pagination": "no",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
-    "clientRootFolder": "",
+    "clientRootFolder": "donviphathanh",
     "applications": [
-        "gateway",
         "donviphathanh"
     ],
-    "microserviceName": "donviphathanh",
-    "enableEntityAudit": true
+    "microserviceName": "donviphathanh"
 }

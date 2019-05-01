@@ -1,60 +1,56 @@
 package com.manager.donviphathanh.domain;
 
+import com.manager.donviphathanh.domain.enumeration.Status;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.Objects;
-
-import com.manager.donviphathanh.domain.enumeration.ReportStatus;
 
 /**
  * A MauPhatHanh.
  */
-@Entity
-@Table(name = "mau_phat_hanh")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(collection = "mau_phat_hanh")
 public class MauPhatHanh extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @NotNull
-    @Column(name = "mau_phat_hanh_code", nullable = false)
+    @Field("mau_phat_hanh_code")
     private String mauPhatHanhCode;
 
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Field("nhom_phan_loai")
+    private CustomType nhomPhanLoai;
+
+    @NotNull
+    @Field("name")
     private String name;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private ReportStatus status;
+    @Field("status")
+    private Status status;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private PhamVi phamvi;
+    @NotNull
+    @Field("tieu_chi_mau_phat_hanh")
+    private List<TieuChiMauPhatHanh> tieuChiMauPhatHanhs;
 
-    @OneToMany(mappedBy = "mauphathanh")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<MauPhatHanhTieuChi> mauphathanhtieuchis = new HashSet<>();
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
+    @Field("tien_trinh_xu_ly")
+    private List<TienTrinhXuLy> tienTrinhXuLyList;
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not
+    // remove
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -62,17 +58,21 @@ public class MauPhatHanh extends AbstractAuditingEntity implements Serializable 
         return mauPhatHanhCode;
     }
 
+    public void setMauPhatHanhCode(String mauPhatHanhCode) {
+        this.mauPhatHanhCode = mauPhatHanhCode;
+    }
+
     public MauPhatHanh mauPhatHanhCode(String mauPhatHanhCode) {
         this.mauPhatHanhCode = mauPhatHanhCode;
         return this;
     }
 
-    public void setMauPhatHanhCode(String mauPhatHanhCode) {
-        this.mauPhatHanhCode = mauPhatHanhCode;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public MauPhatHanh name(String name) {
@@ -80,61 +80,59 @@ public class MauPhatHanh extends AbstractAuditingEntity implements Serializable 
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ReportStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public MauPhatHanh status(ReportStatus status) {
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public MauPhatHanh status(Status status) {
         this.status = status;
         return this;
     }
 
-    public void setStatus(ReportStatus status) {
-        this.status = status;
+    public List<TieuChiMauPhatHanh> getTieuChiMauPhatHanhs() {
+        return tieuChiMauPhatHanhs;
     }
 
-    public PhamVi getPhamvi() {
-        return phamvi;
+    public void setTieuChiMauPhatHanhs(List<TieuChiMauPhatHanh> tieuChiMauPhatHanhs) {
+        this.tieuChiMauPhatHanhs = tieuChiMauPhatHanhs;
     }
 
-    public MauPhatHanh phamvi(PhamVi phamVi) {
-        this.phamvi = phamVi;
+    public MauPhatHanh tieuChiMauPhatHanhs(List<TieuChiMauPhatHanh> tieuChiMauPhatHanhs) {
+        this.tieuChiMauPhatHanhs = tieuChiMauPhatHanhs;
         return this;
     }
 
-    public void setPhamvi(PhamVi phamVi) {
-        this.phamvi = phamVi;
-    }
-
-    public Set<MauPhatHanhTieuChi> getMauphathanhtieuchis() {
-        return mauphathanhtieuchis;
-    }
-
-    public MauPhatHanh mauphathanhtieuchis(Set<MauPhatHanhTieuChi> mauPhatHanhTieuChis) {
-        this.mauphathanhtieuchis = mauPhatHanhTieuChis;
+    public MauPhatHanh addTieuChiMauPhatHanh(TieuChiMauPhatHanh tieuChiMauPhatHanh) {
+        this.tieuChiMauPhatHanhs.add(tieuChiMauPhatHanh);
         return this;
     }
 
-    public MauPhatHanh addMauphathanhtieuchi(MauPhatHanhTieuChi mauPhatHanhTieuChi) {
-        this.mauphathanhtieuchis.add(mauPhatHanhTieuChi);
-        mauPhatHanhTieuChi.setMauphathanh(this);
+    public MauPhatHanh removeTieuChiMauPhatHanh(TieuChiMauPhatHanh tieuChiMauPhatHanh) {
+        this.tieuChiMauPhatHanhs.remove(tieuChiMauPhatHanh);
         return this;
     }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here, do not remove
 
-    public MauPhatHanh removeMauphathanhtieuchi(MauPhatHanhTieuChi mauPhatHanhTieuChi) {
-        this.mauphathanhtieuchis.remove(mauPhatHanhTieuChi);
-        mauPhatHanhTieuChi.setMauphathanh(null);
-        return this;
+    public CustomType getNhomPhanLoai() {
+        return nhomPhanLoai;
     }
 
-    public void setMauphathanhtieuchis(Set<MauPhatHanhTieuChi> mauPhatHanhTieuChis) {
-        this.mauphathanhtieuchis = mauPhatHanhTieuChis;
+    public void setNhomPhanLoai(CustomType nhomPhanLoai) {
+        this.nhomPhanLoai = nhomPhanLoai;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    public List<TienTrinhXuLy> getTienTrinhXuLyList() {
+        return tienTrinhXuLyList;
+    }
+
+    public void setTienTrinhXuLyList(List<TienTrinhXuLy> tienTrinhXuLyList) {
+        this.tienTrinhXuLyList = tienTrinhXuLyList;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -156,13 +154,4 @@ public class MauPhatHanh extends AbstractAuditingEntity implements Serializable 
         return Objects.hashCode(getId());
     }
 
-    @Override
-    public String toString() {
-        return "MauPhatHanh{" +
-            "id=" + getId() +
-            ", mauPhatHanhCode='" + getMauPhatHanhCode() + "'" +
-            ", name='" + getName() + "'" +
-            ", status='" + getStatus() + "'" +
-            "}";
-    }
 }

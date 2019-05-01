@@ -1,36 +1,15 @@
 package com.manager.donviphathanh.service;
 
-import com.manager.donviphathanh.domain.MauPhatHanh;
-import com.manager.donviphathanh.repository.MauPhatHanhRepository;
+import com.manager.donviphathanh.service.dto.CreateMauPhatHanhDTO;
 import com.manager.donviphathanh.service.dto.MauPhatHanhDTO;
-import com.manager.donviphathanh.service.mapper.MauPhatHanhMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 import java.util.Optional;
 
 /**
- * Service Implementation for managing MauPhatHanh.
+ * Service Interface for managing MauPhatHanh.
  */
-@Service
-@Transactional
-public class MauPhatHanhService {
-
-    private final Logger log = LoggerFactory.getLogger(MauPhatHanhService.class);
-
-    private final MauPhatHanhRepository mauPhatHanhRepository;
-
-    private final MauPhatHanhMapper mauPhatHanhMapper;
-
-    public MauPhatHanhService(MauPhatHanhRepository mauPhatHanhRepository, MauPhatHanhMapper mauPhatHanhMapper) {
-        this.mauPhatHanhRepository = mauPhatHanhRepository;
-        this.mauPhatHanhMapper = mauPhatHanhMapper;
-    }
+public interface MauPhatHanhService {
 
     /**
      * Save a mauPhatHanh.
@@ -38,47 +17,42 @@ public class MauPhatHanhService {
      * @param mauPhatHanhDTO the entity to save
      * @return the persisted entity
      */
-    public MauPhatHanhDTO save(MauPhatHanhDTO mauPhatHanhDTO) {
-        log.debug("Request to save MauPhatHanh : {}", mauPhatHanhDTO);
-        MauPhatHanh mauPhatHanh = mauPhatHanhMapper.toEntity(mauPhatHanhDTO);
-        mauPhatHanh = mauPhatHanhRepository.save(mauPhatHanh);
-        return mauPhatHanhMapper.toDto(mauPhatHanh);
-    }
+    MauPhatHanhDTO save(MauPhatHanhDTO mauPhatHanhDTO);
 
     /**
      * Get all the mauPhatHanhs.
      *
-     * @param pageable the pagination information
      * @return the list of entities
      */
-    @Transactional(readOnly = true)
-    public Page<MauPhatHanhDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all MauPhatHanhs");
-        return mauPhatHanhRepository.findAll(pageable)
-            .map(mauPhatHanhMapper::toDto);
-    }
+    List<MauPhatHanhDTO> findAll();
 
 
     /**
-     * Get one mauPhatHanh by id.
+     * Get the "id" mauPhatHanh.
      *
      * @param id the id of the entity
      * @return the entity
      */
-    @Transactional(readOnly = true)
-    public Optional<MauPhatHanhDTO> findOne(Long id) {
-        log.debug("Request to get MauPhatHanh : {}", id);
-        return mauPhatHanhRepository.findById(id)
-            .map(mauPhatHanhMapper::toDto);
-    }
+    Optional<MauPhatHanhDTO> findOne(String id);
 
     /**
-     * Delete the mauPhatHanh by id.
+     * Get the "mauPhatHanhCode" mauPhatHanh.
+     *
+     * @param mauPhatHanhCode the code of the entity
+     * @return the entity
+     */
+    Optional<MauPhatHanhDTO> findOneByMauPhatHanhCode(String mauPhatHanhCode);
+
+    /**
+     * Delete the "id" mauPhatHanh.
      *
      * @param id the id of the entity
      */
-    public void delete(Long id) {
-        log.debug("Request to delete MauPhatHanh : {}", id);
-        mauPhatHanhRepository.deleteById(id);
-    }
+    void delete(String id);
+
+    Optional<MauPhatHanhDTO> create(CreateMauPhatHanhDTO createMauPhatHanhDTO);
+
+    Optional<MauPhatHanhDTO> approve(String mauPhatHanhCode);
+
+    Optional<MauPhatHanhDTO> feedback(String mauPhatHanhCode, String note);
 }

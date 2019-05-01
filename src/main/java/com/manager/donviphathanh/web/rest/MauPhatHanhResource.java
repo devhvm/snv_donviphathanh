@@ -1,23 +1,18 @@
 package com.manager.donviphathanh.web.rest;
+
 import com.manager.donviphathanh.service.MauPhatHanhService;
-import com.manager.donviphathanh.web.rest.errors.BadRequestAlertException;
-import com.manager.donviphathanh.web.rest.util.HeaderUtil;
-import com.manager.donviphathanh.web.rest.util.PaginationUtil;
+import com.manager.donviphathanh.service.dto.CreateMauPhatHanhDTO;
 import com.manager.donviphathanh.service.dto.MauPhatHanhDTO;
+import com.manager.donviphathanh.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +29,7 @@ public class MauPhatHanhResource {
 
     private final MauPhatHanhService mauPhatHanhService;
 
+
     public MauPhatHanhResource(MauPhatHanhService mauPhatHanhService) {
         this.mauPhatHanhService = mauPhatHanhService;
     }
@@ -41,80 +37,77 @@ public class MauPhatHanhResource {
     /**
      * POST  /mau-phat-hanhs : Create a new mauPhatHanh.
      *
-     * @param mauPhatHanhDTO the mauPhatHanhDTO to create
+     * @param createMauPhatHanhDTO the mauPhatHanhDTO to create
      * @return the ResponseEntity with status 201 (Created) and with body the new mauPhatHanhDTO, or with status 400 (Bad Request) if the mauPhatHanh has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @PostMapping("/mau-phat-hanhs")
-    public ResponseEntity<MauPhatHanhDTO> createMauPhatHanh(@Valid @RequestBody MauPhatHanhDTO mauPhatHanhDTO) throws URISyntaxException {
-        log.debug("REST request to save MauPhatHanh : {}", mauPhatHanhDTO);
-        if (mauPhatHanhDTO.getId() != null) {
-            throw new BadRequestAlertException("A new mauPhatHanh cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        MauPhatHanhDTO result = mauPhatHanhService.save(mauPhatHanhDTO);
+    @PostMapping("/mau-phat-hanh")
+    public ResponseEntity<MauPhatHanhDTO> createMauPhatHanh(@Valid @RequestBody CreateMauPhatHanhDTO createMauPhatHanhDTO) throws URISyntaxException {
+        log.debug("REST request to save MauPhatHanh : {}", createMauPhatHanhDTO);
+
+        MauPhatHanhDTO result = mauPhatHanhService.create(createMauPhatHanhDTO).get();
+
         return ResponseEntity.created(new URI("/api/mau-phat-hanhs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
             .body(result);
     }
 
-    /**
-     * PUT  /mau-phat-hanhs : Updates an existing mauPhatHanh.
-     *
-     * @param mauPhatHanhDTO the mauPhatHanhDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated mauPhatHanhDTO,
-     * or with status 400 (Bad Request) if the mauPhatHanhDTO is not valid,
-     * or with status 500 (Internal Server Error) if the mauPhatHanhDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/mau-phat-hanhs")
-    public ResponseEntity<MauPhatHanhDTO> updateMauPhatHanh(@Valid @RequestBody MauPhatHanhDTO mauPhatHanhDTO) throws URISyntaxException {
-        log.debug("REST request to update MauPhatHanh : {}", mauPhatHanhDTO);
-        if (mauPhatHanhDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        MauPhatHanhDTO result = mauPhatHanhService.save(mauPhatHanhDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, mauPhatHanhDTO.getId().toString()))
+    @PostMapping("/mau-phat-hanh/{mauPhatHanhCode}/approve")
+    public ResponseEntity<MauPhatHanhDTO> approveMauPhatHanh(@PathVariable String mauPhatHanhCode) throws URISyntaxException {
+        log.debug("REST request to save MauPhatHanh : {}", mauPhatHanhCode);
+
+        MauPhatHanhDTO result = mauPhatHanhService.approve(mauPhatHanhCode).get();
+
+        return ResponseEntity.created(new URI("/api/mau-phat-hanh/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
             .body(result);
     }
 
+    //feedback
+    @PostMapping("/mau-phat-hanh/{mauPhatHanhCode}/feedback")
+    public ResponseEntity<MauPhatHanhDTO> feedbackMauPhatHanh(@PathVariable String mauPhatHanhCode, @RequestParam("note") String note) throws URISyntaxException {
+        log.debug("REST request to save MauPhatHanh : {}", mauPhatHanhCode);
+
+        MauPhatHanhDTO result = mauPhatHanhService.feedback(mauPhatHanhCode, note).get();
+
+        return ResponseEntity.created(new URI("/api/mau-phat-hanh/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
+            .body(result);
+    }
     /**
      * GET  /mau-phat-hanhs : get all the mauPhatHanhs.
      *
-     * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and the list of mauPhatHanhs in body
      */
-    @GetMapping("/mau-phat-hanhs")
-    public ResponseEntity<List<MauPhatHanhDTO>> getAllMauPhatHanhs(Pageable pageable) {
-        log.debug("REST request to get a page of MauPhatHanhs");
-        Page<MauPhatHanhDTO> page = mauPhatHanhService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/mau-phat-hanhs");
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    @GetMapping("/list")
+    public List<MauPhatHanhDTO> list() {
+        log.debug("REST request to get all MauPhatHanhs");
+        return mauPhatHanhService.findAll();
     }
 
     /**
-     * GET  /mau-phat-hanhs/:id : get the "id" mauPhatHanh.
+     * GET  /mau-phat-hanh/:code : get the "code" mauPhatHanh.
      *
-     * @param id the id of the mauPhatHanhDTO to retrieve
+     * @param mauPhatHanhCode the code of the mauPhatHanhDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the mauPhatHanhDTO, or with status 404 (Not Found)
      */
-    @GetMapping("/mau-phat-hanhs/{id}")
-    public ResponseEntity<MauPhatHanhDTO> getMauPhatHanh(@PathVariable Long id) {
-        log.debug("REST request to get MauPhatHanh : {}", id);
-        Optional<MauPhatHanhDTO> mauPhatHanhDTO = mauPhatHanhService.findOne(id);
+    @GetMapping("/mau-phat-hanh/{mauPhatHanhCode}")
+    public ResponseEntity<MauPhatHanhDTO> getMauPhatHanh(@PathVariable String mauPhatHanhCode) {
+        log.debug("REST request to get MauPhatHanh : {}", mauPhatHanhCode);
+        Optional<MauPhatHanhDTO> mauPhatHanhDTO = mauPhatHanhService.findOneByMauPhatHanhCode(mauPhatHanhCode);
         return ResponseUtil.wrapOrNotFound(mauPhatHanhDTO);
     }
 
     /**
-     * DELETE  /mau-phat-hanhs/:id : delete the "id" mauPhatHanh.
+     * DELETE  /mau-phat-hanhs/:code : delete the "code" mauPhatHanh.
      *
-     * @param id the id of the mauPhatHanhDTO to delete
+     * @param code the id of the mauPhatHanhDTO to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @DeleteMapping("/mau-phat-hanhs/{id}")
-    public ResponseEntity<Void> deleteMauPhatHanh(@PathVariable Long id) {
-        log.debug("REST request to delete MauPhatHanh : {}", id);
-        mauPhatHanhService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    @DeleteMapping("/mau-phat-hanh/{code}")
+    public ResponseEntity<Void> deleteMauPhatHanh(@PathVariable String code) {
+        log.debug("REST request to delete MauPhatHanh : {}", code);
+        mauPhatHanhService.delete(code);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, code)).build();
     }
 }

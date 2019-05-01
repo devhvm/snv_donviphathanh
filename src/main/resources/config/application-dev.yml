@@ -36,39 +36,15 @@ spring:
     devtools:
         restart:
             enabled: true
-            additional-exclude: .h2.server.properties
         livereload:
             enabled: false # we use Webpack dev server + BrowserSync for livereload
     jackson:
         serialization:
             indent-output: true
-    datasource:
-        type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:h2:file:./target/h2db/db/donviphathanh;DB_CLOSE_DELAY=-1
-        username: donviphathanh
-        password:
-        hikari:
-            poolName: Hikari
-            auto-commit: false
-    h2:
-        console:
-            enabled: false
-    jpa:
-        database-platform: io.github.jhipster.domain.util.FixedH2Dialect
-        database: H2
-        show-sql: true
-        properties:
-            hibernate.id.new_generator_mappings: true
-            hibernate.connection.provider_disables_autocommit: true
-            hibernate.cache.use_second_level_cache: true
-            hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: true
-            hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
-            hibernate.cache.hazelcast.instance_name: donviphathanh
-            hibernate.cache.use_minimal_puts: true
-            hibernate.cache.hazelcast.use_lite_member: true
-    liquibase:
-        contexts: dev
+    data:
+        mongodb:
+            uri: mongodb://admin:adminpass@vtools.xyz:27017
+            database: donviphathanh
     mail:
         host: localhost
         port: 25
@@ -89,7 +65,7 @@ spring:
                 enabled: true
 
 server:
-    port: 15052
+    port: 9083
 
 # ===================================================================
 # JHipster specific properties
@@ -100,14 +76,6 @@ server:
 jhipster:
     http:
         version: V_1_1 # To use HTTP/2 you will need to activate TLS (see application-tls.yml)
-    cache: # Cache configuration
-        hazelcast: # Hazelcast distributed cache
-            time-to-live-seconds: 3600
-            backup-count: 1
-            management-center: # Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
-                enabled: false
-                update-interval: 3
-                url: http://localhost:8180/mancenter
     # CORS is disabled by default on microservices, as you should access them through a gateway.
     # If you want to enable it, please uncomment the configuration below.
     # cors:
@@ -121,13 +89,13 @@ jhipster:
         authentication:
             jwt:
                 # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-                base64-secret: YjlkZjNhZWQyNWJhMzMwNzU1YTYyNmE4ZWFiNTNjYmMzZWE4NjUwM2FlZWUzM2E4M2Q3ZDhlYzYxYjUwY2JmNGFkYTI3ZjY0MzM2NGIxYjFjYzk1MzczMmY3ZTkzMzBmODViOTUzNDlkNTNjM2U5MzEzZmZiYTNlMjViYzU2OGI=
+                base64-secret: YTViYTM1MzQ1OWRjZDZiOTA0OWM3NjQyOTkzZTY0MWJhZDAxMWVmYjE2NTYyY2UzZjY5ZTNkYzAyNjM2ZTUxMTc4Y2I5MzE3ZTU0OWMwZWQwNTMwZmE2N2ZhMjVjMDc4Nzc3Ng==
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: donviphathanh@localhost
-        base-url: http://127.0.0.1:15052
+        base-url: http://127.0.0.1:9083
     metrics:
         logs: # Reports metrics in the logs
             enabled: false
@@ -149,3 +117,7 @@ jhipster:
 # ===================================================================
 
 # application:
+application:
+    gateway:
+        common: http://vtools.xyz:9999/common
+        quytrinhdonvi: http://vtools.xyz:9999/quytrinhdonvi
