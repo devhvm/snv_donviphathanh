@@ -128,5 +128,5 @@ jhipster:
 # application:
 application:
     gateway:
-        common: common
-        quytrinhdonvi: quytrinhdonvi
+        common: ''
+        quytrinhdonvi: ''
