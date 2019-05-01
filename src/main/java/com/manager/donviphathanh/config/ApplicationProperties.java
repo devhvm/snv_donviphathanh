@@ -22,6 +22,7 @@ public class ApplicationProperties {
 
     public static class GateWay {
         private String common;
+        private String quytrinhdonvi;
 
         public String getCommon() {
             return common;
@@ -29,6 +30,14 @@ public class ApplicationProperties {
 
         public void setCommon(String common) {
             this.common = common;
+        }
+
+        public String getQuytrinhdonvi() {
+            return quytrinhdonvi;
+        }
+
+        public void setQuytrinhdonvi(String quytrinhdonvi) {
+            this.quytrinhdonvi = quytrinhdonvi;
         }
     }
 }

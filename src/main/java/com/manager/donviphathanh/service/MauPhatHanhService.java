@@ -36,11 +36,23 @@ public interface MauPhatHanhService {
     Optional<MauPhatHanhDTO> findOne(String id);
 
     /**
+     * Get the "mauPhatHanhCode" mauPhatHanh.
+     *
+     * @param mauPhatHanhCode the code of the entity
+     * @return the entity
+     */
+    Optional<MauPhatHanhDTO> findOneByMauPhatHanhCode(String mauPhatHanhCode);
+
+    /**
      * Delete the "id" mauPhatHanh.
      *
      * @param id the id of the entity
      */
     void delete(String id);
 
-    MauPhatHanhDTO create(CreateMauPhatHanhDTO createMauPhatHanhDTO);
+    Optional<MauPhatHanhDTO> create(CreateMauPhatHanhDTO createMauPhatHanhDTO);
+
+    Optional<MauPhatHanhDTO> approve(String mauPhatHanhCode);
+
+    Optional<MauPhatHanhDTO> feedback(String mauPhatHanhCode, String note);
 }

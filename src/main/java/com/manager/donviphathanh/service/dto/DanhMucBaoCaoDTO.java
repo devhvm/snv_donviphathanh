@@ -4,7 +4,6 @@ import com.manager.donviphathanh.domain.CustomType;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class DanhMucBaoCaoDTO {
     @NotNull
@@ -13,9 +12,9 @@ public class DanhMucBaoCaoDTO {
     @NotNull
     @Field("hien_thi_nhap_lieu")
     private Boolean hienThiNhapLieu;
-    @NotNull
-    @Field("du_lieu_bao_cao")
-    private List<DuLieuBaoCaoDTO> duLieuBaoCaos;
+//    @NotNull
+//    @Field("du_lieu_bao_cao")
+//    private List<DuLieuBaoCaoDTO> duLieuBaoCaos;
 
     public DanhMucBaoCaoDTO() {
     }
@@ -36,11 +35,11 @@ public class DanhMucBaoCaoDTO {
         this.hienThiNhapLieu = hienThiNhapLieu;
     }
 
-    public List<DuLieuBaoCaoDTO> getDuLieuBaoCaos() {
-        return duLieuBaoCaos;
-    }
-
-    public void setDuLieuBaoCaos(List<DuLieuBaoCaoDTO> duLieuBaoCaos) {
-        this.duLieuBaoCaos = duLieuBaoCaos;
-    }
+//    public List<DuLieuBaoCaoDTO> getDuLieuBaoCaos() {
+//        return duLieuBaoCaos;
+//    }
+//
+//    public void setDuLieuBaoCaos(List<DuLieuBaoCaoDTO> duLieuBaoCaos) {
+//        this.duLieuBaoCaos = duLieuBaoCaos;
+//    }
 }

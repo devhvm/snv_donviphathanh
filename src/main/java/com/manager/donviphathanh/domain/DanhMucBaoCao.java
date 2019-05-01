@@ -3,7 +3,6 @@ package com.manager.donviphathanh.domain;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class DanhMucBaoCao {
     @NotNull
@@ -12,9 +11,9 @@ public class DanhMucBaoCao {
     @NotNull
     @Field("hien_thi_nhap_lieu")
     private Boolean hienThiNhapLieu;
-    @NotNull
-    @Field("du_lieu_bao_cao")
-    private List<DuLieuBaoCao> duLieuBaoCaos;
+//    @NotNull
+//    @Field("du_lieu_bao_cao")
+//    private List<DuLieuBaoCao> duLieuBaoCaos;
 
     public CustomType getDanhMuc() {
         return danhMuc;
@@ -32,11 +31,11 @@ public class DanhMucBaoCao {
         this.hienThiNhapLieu = hienThiNhapLieu;
     }
 
-    public List<DuLieuBaoCao> getDuLieuBaoCaos() {
-        return duLieuBaoCaos;
-    }
-
-    public void setDuLieuBaoCaos(List<DuLieuBaoCao> duLieuBaoCaos) {
-        this.duLieuBaoCaos = duLieuBaoCaos;
-    }
+//    public List<DuLieuBaoCao> getDuLieuBaoCaos() {
+//        return duLieuBaoCaos;
+//    }
+//
+//    public void setDuLieuBaoCaos(List<DuLieuBaoCao> duLieuBaoCaos) {
+//        this.duLieuBaoCaos = duLieuBaoCaos;
+//    }
 }

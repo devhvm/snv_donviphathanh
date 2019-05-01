@@ -45,7 +45,7 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
      */
     @Transactional
     @Override
-    public MauPhatHanhDTO create(CreateMauPhatHanhDTO createMauPhatHanhDTO) {
+    public Optional<MauPhatHanhDTO> create(CreateMauPhatHanhDTO createMauPhatHanhDTO) {
         log.debug("Request to save createMauPhatHanhDTO : {}", createMauPhatHanhDTO);
 
         MauPhatHanhDTO mauPhatHanhDTO = new MauPhatHanhDTO();
@@ -55,9 +55,19 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
 
         MauPhatHanh mauPhatHanh = mauPhatHanhMapper.toEntity(mauPhatHanhDTO);
         mauPhatHanh = mauPhatHanhRepository.save(mauPhatHanh);
-        return mauPhatHanhMapper.toDto(mauPhatHanh);
+        return Optional.of(mauPhatHanhMapper.toDto(mauPhatHanh));
 
 
+    }
+
+    @Override
+    public Optional<MauPhatHanhDTO> approve(String mauPhatHanhCode) {
+        return findOneByMauPhatHanhCode(mauPhatHanhCode);
+    }
+
+    @Override
+    public Optional<MauPhatHanhDTO> feedback(String mauPhatHanhCode, String note) {
+        return findOneByMauPhatHanhCode(mauPhatHanhCode);
     }
 
     /**
@@ -102,13 +112,27 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
     }
 
     /**
-     * Delete the mauPhatHanh by id.
+     * Get one mauPhatHanh by mauPhatHanhCode.
      *
-     * @param id the id of the entity
+     * @param mauPhatHanhCode the code of the entity
+     * @return the entity
      */
     @Override
-    public void delete(String id) {
-        log.debug("Request to delete MauPhatHanh : {}", id);
-        mauPhatHanhRepository.deleteById(id);
+    public Optional<MauPhatHanhDTO> findOneByMauPhatHanhCode(String mauPhatHanhCode) {
+        log.debug("Request to get MauPhatHanh : {}", mauPhatHanhCode);
+
+        return mauPhatHanhRepository.findByMauPhatHanhCode(mauPhatHanhCode)
+            .map(mauPhatHanhMapper::toDto);
+    }
+
+    /**
+     * Delete the mauPhatHanh by mauPhatHanhCode.
+     *
+     * @param mauPhatHanhCode the id of the entity
+     */
+    @Override
+    public void delete(String mauPhatHanhCode) {
+        log.debug("Request to delete MauPhatHanh : {}", mauPhatHanhCode);
+        mauPhatHanhRepository.deleteByMauPhatHanhCode(mauPhatHanhCode);
     }
 }
