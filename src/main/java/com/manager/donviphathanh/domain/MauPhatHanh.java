@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,8 +42,8 @@ public class MauPhatHanh extends AbstractAuditingEntity implements Serializable 
     @Field("tieu_chi_mau_phat_hanh")
     private List<TieuChiMauPhatHanh> tieuChiMauPhatHanhs;
 
-    @Field("tien_trinh_xu_ly")
-    private List<TienTrinhXuLy> tienTrinhXuLyList;
+    @Field("du_lieu_tien_trinh")
+    private final List<DuLieuTienTrinh> duLieuTienTrinhs = new ArrayList<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not
     // remove
@@ -126,12 +127,8 @@ public class MauPhatHanh extends AbstractAuditingEntity implements Serializable 
         this.nhomPhanLoai = nhomPhanLoai;
     }
 
-    public List<TienTrinhXuLy> getTienTrinhXuLyList() {
-        return tienTrinhXuLyList;
-    }
-
-    public void setTienTrinhXuLyList(List<TienTrinhXuLy> tienTrinhXuLyList) {
-        this.tienTrinhXuLyList = tienTrinhXuLyList;
+    public List<DuLieuTienTrinh> getDuLieuTienTrinhs() {
+        return duLieuTienTrinhs;
     }
 
     @Override

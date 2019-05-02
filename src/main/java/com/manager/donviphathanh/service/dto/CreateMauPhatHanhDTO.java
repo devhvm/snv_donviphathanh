@@ -4,6 +4,8 @@ public class CreateMauPhatHanhDTO {
 
     private String maCoQuanChuTri;
 
+    private Long idCoQuanChuTri;
+
     private String maMauPhatHanh;
 
     private String tenMauPhatHanh;
@@ -52,5 +54,13 @@ public class CreateMauPhatHanhDTO {
 
     public void setMax(Integer max) {
         this.max = max;
+    }
+
+    public Long getIdCoQuanChuTri() {
+        return idCoQuanChuTri;
+    }
+
+    public void setIdCoQuanChuTri(Long idCoQuanChuTri) {
+        this.idCoQuanChuTri = idCoQuanChuTri;
     }
 }

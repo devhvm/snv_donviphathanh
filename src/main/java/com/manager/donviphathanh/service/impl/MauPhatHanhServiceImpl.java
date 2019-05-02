@@ -1,12 +1,17 @@
 package com.manager.donviphathanh.service.impl;
 
 import com.manager.donviphathanh.client.CommonServiceClient;
+import com.manager.donviphathanh.domain.DuLieuTienTrinh;
 import com.manager.donviphathanh.domain.MauPhatHanh;
 import com.manager.donviphathanh.repository.MauPhatHanhRepository;
 import com.manager.donviphathanh.service.MauPhatHanhService;
 import com.manager.donviphathanh.service.dto.CreateMauPhatHanhDTO;
 import com.manager.donviphathanh.service.dto.MauPhatHanhDTO;
+import com.manager.donviphathanh.service.dto.common.TieuChiDetailDTO;
+import com.manager.donviphathanh.service.dto.quytrinhdonvi.DuLieuTienTrinhDTO;
+import com.manager.donviphathanh.service.mapper.DuLieuTienTrinhMapper;
 import com.manager.donviphathanh.service.mapper.MauPhatHanhMapper;
+import com.manager.donviphathanh.web.rest.errors.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,6 +37,8 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
     @Autowired
     @Qualifier("common")
     CommonServiceClient commonServiceClient;
+    @Autowired
+    DuLieuTienTrinhMapper duLieuTienTrinhMapper;
 
     public MauPhatHanhServiceImpl(MauPhatHanhRepository mauPhatHanhRepository, MauPhatHanhMapper mauPhatHanhMapper) {
         this.mauPhatHanhRepository = mauPhatHanhRepository;
@@ -48,27 +56,42 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
     public Optional<MauPhatHanhDTO> create(CreateMauPhatHanhDTO createMauPhatHanhDTO) {
         log.debug("Request to save createMauPhatHanhDTO : {}", createMauPhatHanhDTO);
 
-        MauPhatHanhDTO mauPhatHanhDTO = new MauPhatHanhDTO();
+        List<TieuChiDetailDTO> tieuChiDetailDTOList;
         //call api common create
+        tieuChiDetailDTOList = commonServiceClient.getTieuChisByCoQuanChuTriID(createMauPhatHanhDTO.getIdCoQuanChuTri().longValue());
 
-        mauPhatHanhDTO = commonServiceClient.createMauPhatHanh(createMauPhatHanhDTO);
+        if (Objects.isNull(tieuChiDetailDTOList) || tieuChiDetailDTOList.isEmpty()) {
+            throw new ResourceNotFoundException("Không tồn tại danh sách tiêu chi của CQTT này");
+        }
+
+        MauPhatHanhDTO mauPhatHanhDTO = MauPhatHanhDTO.of(createMauPhatHanhDTO, tieuChiDetailDTOList);
 
         MauPhatHanh mauPhatHanh = mauPhatHanhMapper.toEntity(mauPhatHanhDTO);
         mauPhatHanh = mauPhatHanhRepository.save(mauPhatHanh);
+
+        //call API thêm quy trình
+
         return Optional.of(mauPhatHanhMapper.toDto(mauPhatHanh));
 
 
     }
 
     @Override
-    public Optional<MauPhatHanhDTO> approve(String mauPhatHanhCode) {
-        return findOneByMauPhatHanhCode(mauPhatHanhCode);
+    public Optional<MauPhatHanhDTO> updateQuyTrinh(DuLieuTienTrinhDTO duLieuTienTrinhDTO) {
+        Optional<MauPhatHanh> mauPhatHanhOptional = mauPhatHanhRepository.findByMauPhatHanhCode(duLieuTienTrinhDTO.getDuLieuCode());
+        if (!mauPhatHanhOptional.isPresent()) throw new ResourceNotFoundException("Mau phat hanh khong ton tai.");
+
+        MauPhatHanh mauPhatHanh = mauPhatHanhOptional.get();
+
+        DuLieuTienTrinh duLieuTienTrinh = duLieuTienTrinhMapper.toEntity(duLieuTienTrinhDTO);
+
+        mauPhatHanh.getDuLieuTienTrinhs().add(duLieuTienTrinh);
+        mauPhatHanh.setStatus(duLieuTienTrinh.getStatus());
+        mauPhatHanh = mauPhatHanhRepository.save(mauPhatHanh);
+
+        return Optional.of(mauPhatHanhMapper.toDto(mauPhatHanh));
     }
 
-    @Override
-    public Optional<MauPhatHanhDTO> feedback(String mauPhatHanhCode, String note) {
-        return findOneByMauPhatHanhCode(mauPhatHanhCode);
-    }
 
     /**
      * Save a mauPhatHanh.

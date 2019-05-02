@@ -32,4 +32,6 @@ public class NoiDungBaoCaoDTO {
     public void setNhomDanhMucBaoCaos(List<NhomDanhMucBaoCaoDTO> nhomDanhMucBaoCaos) {
         this.nhomDanhMucBaoCaos = nhomDanhMucBaoCaos;
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.manager.donviphathanh.service;
 
 import com.manager.donviphathanh.service.dto.CreateMauPhatHanhDTO;
 import com.manager.donviphathanh.service.dto.MauPhatHanhDTO;
+import com.manager.donviphathanh.service.dto.quytrinhdonvi.DuLieuTienTrinhDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +53,7 @@ public interface MauPhatHanhService {
 
     Optional<MauPhatHanhDTO> create(CreateMauPhatHanhDTO createMauPhatHanhDTO);
 
-    Optional<MauPhatHanhDTO> approve(String mauPhatHanhCode);
+    Optional<MauPhatHanhDTO> updateQuyTrinh(DuLieuTienTrinhDTO duLieuTienTrinh);
 
-    Optional<MauPhatHanhDTO> feedback(String mauPhatHanhCode, String note);
+
 }
