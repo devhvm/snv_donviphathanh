@@ -23,6 +23,17 @@ public class TieuChiMauPhatHanhDTO {
     @Field("noi_dung_bao_cao_out")
     private List<NoiDungBaoCaoDTO> noiDungBaoCaoOuts;
 
+    public TieuChiMauPhatHanhDTO() {
+    }
+
+    public TieuChiMauPhatHanhDTO(@NotNull CustomType tieuChi, @NotNull CustomType coQuanChuQuan, @NotNull CustomType kyCongBo, @NotNull List<NoiDungBaoCaoDTO> noiDungBaoCaoIns, @NotNull List<NoiDungBaoCaoDTO> noiDungBaoCaoOuts) {
+        this.tieuChi = tieuChi;
+        this.coQuanChuQuan = coQuanChuQuan;
+        this.kyCongBo = kyCongBo;
+        this.noiDungBaoCaoIns = noiDungBaoCaoIns;
+        this.noiDungBaoCaoOuts = noiDungBaoCaoOuts;
+    }
+
     public CustomType getTieuChi() {
         return tieuChi;
     }
@@ -62,4 +73,5 @@ public class TieuChiMauPhatHanhDTO {
     public void setNoiDungBaoCaoOuts(List<NoiDungBaoCaoDTO> noiDungBaoCaoOuts) {
         this.noiDungBaoCaoOuts = noiDungBaoCaoOuts;
     }
+
 }

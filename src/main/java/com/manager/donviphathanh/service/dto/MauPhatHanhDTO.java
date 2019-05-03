@@ -1,6 +1,7 @@
 package com.manager.donviphathanh.service.dto;
 
 import com.manager.donviphathanh.domain.enumeration.Status;
+import com.manager.donviphathanh.service.dto.common.TieuChiDetailDTO;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -26,7 +27,22 @@ public class MauPhatHanhDTO implements Serializable {
     private Status status;
 
     @NotNull
-    private List<TieuChiMauPhatHanhDTO> tieuChiMauPhatHanhs;
+    private List<TieuChiDetailDTO> tieuChiDetails;
+
+//    @NotNull
+//    private List<TieuChiMauPhatHanhDTO> tieuChiMauPhatHanhs;
+
+
+    public MauPhatHanhDTO() {
+    }
+
+    public MauPhatHanhDTO(@NotNull String mauPhatHanhCode, CustomTypeDTO nhomPhanLoai, @NotNull String name, @NotNull Status status, @NotNull List<TieuChiDetailDTO> tieuChiDetails) {
+        this.mauPhatHanhCode = mauPhatHanhCode;
+        this.nhomPhanLoai = nhomPhanLoai;
+        this.name = name;
+        this.status = status;
+        this.tieuChiDetails = tieuChiDetails;
+    }
 
     public String getId() {
         return id;
@@ -68,14 +84,13 @@ public class MauPhatHanhDTO implements Serializable {
         this.status = status;
     }
 
-    public List<TieuChiMauPhatHanhDTO> getTieuChiMauPhatHanhs() {
-        return tieuChiMauPhatHanhs;
+    public static MauPhatHanhDTO of(CreateMauPhatHanhDTO createMauPhatHanhDTO, List<TieuChiDetailDTO> tieuChiDetailDTOS) {
+        return new MauPhatHanhDTO(createMauPhatHanhDTO.getMaMauPhatHanh(), null, createMauPhatHanhDTO.getTenMauPhatHanh(), Status.NEW, tieuChiDetailDTOS);
     }
 
-    public void setTieuChiMauPhatHanhs(List<TieuChiMauPhatHanhDTO> tieuChiMauPhatHanhs) {
-        this.tieuChiMauPhatHanhs = tieuChiMauPhatHanhs;
+    public List<TieuChiDetailDTO> getTieuChiDetails() {
+        return tieuChiDetails;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -107,5 +122,9 @@ public class MauPhatHanhDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             "}";
+    }
+
+    public void setTieuChiDetails(List<TieuChiDetailDTO> tieuChiDetails) {
+        this.tieuChiDetails = tieuChiDetails;
     }
 }

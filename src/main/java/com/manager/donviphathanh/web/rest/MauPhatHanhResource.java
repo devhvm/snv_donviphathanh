@@ -3,6 +3,7 @@ package com.manager.donviphathanh.web.rest;
 import com.manager.donviphathanh.service.MauPhatHanhService;
 import com.manager.donviphathanh.service.dto.CreateMauPhatHanhDTO;
 import com.manager.donviphathanh.service.dto.MauPhatHanhDTO;
+import com.manager.donviphathanh.service.dto.quytrinhdonvi.DuLieuTienTrinhDTO;
 import com.manager.donviphathanh.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -47,31 +48,20 @@ public class MauPhatHanhResource {
 
         MauPhatHanhDTO result = mauPhatHanhService.create(createMauPhatHanhDTO).get();
 
-        return ResponseEntity.created(new URI("/api/mau-phat-hanhs/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
-            .body(result);
-    }
-
-    @PostMapping("/mau-phat-hanh/{mauPhatHanhCode}/approve")
-    public ResponseEntity<MauPhatHanhDTO> approveMauPhatHanh(@PathVariable String mauPhatHanhCode) throws URISyntaxException {
-        log.debug("REST request to save MauPhatHanh : {}", mauPhatHanhCode);
-
-        MauPhatHanhDTO result = mauPhatHanhService.approve(mauPhatHanhCode).get();
-
-        return ResponseEntity.created(new URI("/api/mau-phat-hanh/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/mau-phat-hanh/" + result.getMauPhatHanhCode()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
             .body(result);
     }
 
     //feedback
-    @PostMapping("/mau-phat-hanh/{mauPhatHanhCode}/feedback")
-    public ResponseEntity<MauPhatHanhDTO> feedbackMauPhatHanh(@PathVariable String mauPhatHanhCode, @RequestParam("note") String note) throws URISyntaxException {
-        log.debug("REST request to save MauPhatHanh : {}", mauPhatHanhCode);
+    @PostMapping("/mau-phat-hanh/{mauPhatHanhCode}/cap-nhat-quy-trinh")
+    public ResponseEntity<MauPhatHanhDTO> updateMauPhatHanh(@Valid @RequestBody DuLieuTienTrinhDTO duLieuTienTrinh) throws URISyntaxException {
+        log.debug("REST request to save MauPhatHanh : {}", duLieuTienTrinh);
 
-        MauPhatHanhDTO result = mauPhatHanhService.feedback(mauPhatHanhCode, note).get();
+        MauPhatHanhDTO result = mauPhatHanhService.updateQuyTrinh(duLieuTienTrinh).get();
 
-        return ResponseEntity.created(new URI("/api/mau-phat-hanh/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId()))
+        return ResponseEntity.created(new URI("/api/mau-phat-hanh/" + result.getMauPhatHanhCode()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId()))
             .body(result);
     }
     /**
