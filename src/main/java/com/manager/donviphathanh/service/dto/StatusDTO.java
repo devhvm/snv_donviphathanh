@@ -1,5 +1,5 @@
 package com.manager.donviphathanh.service.dto;
 
 public enum StatusDTO {
-    NEW, ACTIVE, SIGNED
+    NEW, ACTIVE, SIGNED, FEEDBACK, DELETED
 }
