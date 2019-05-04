@@ -1,26 +1,26 @@
-package com.manager.donviphathanh.service.dto.common;
-
-import com.manager.donviphathanh.service.dto.StatusDTO;
+package com.manager.donviphathanh.service.dto.common.loaibaocao;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the KyCongBo entity.
+ * A DTO for the DonViTinh entity.
  */
-public class KyCongBoDTO extends AbstractAuditingDTO implements Serializable {
+public class DonViTinhDetailDTO implements Serializable {
 
     private Long id;
 
     @NotNull
-    private String kyCongBoCode;
+    private String donViTinhCode;
 
     @NotNull
     private String name;
 
-    @NotNull
-    private StatusDTO status;
+    private String status;
+
+    //@NotNull
+    private PhamViDetailDTO phamvi;
 
 
     public Long getId() {
@@ -31,12 +31,12 @@ public class KyCongBoDTO extends AbstractAuditingDTO implements Serializable {
         this.id = id;
     }
 
-    public String getKyCongBoCode() {
-        return kyCongBoCode;
+    public String getDonViTinhCode() {
+        return donViTinhCode;
     }
 
-    public void setKyCongBoCode(String kyCongBoCode) {
-        this.kyCongBoCode = kyCongBoCode;
+    public void setDonViTinhCode(String donViTinhCode) {
+        this.donViTinhCode = donViTinhCode;
     }
 
     public String getName() {
@@ -47,11 +47,12 @@ public class KyCongBoDTO extends AbstractAuditingDTO implements Serializable {
         this.name = name;
     }
 
-    public StatusDTO getStatus() {
+
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(StatusDTO status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -64,11 +65,19 @@ public class KyCongBoDTO extends AbstractAuditingDTO implements Serializable {
             return false;
         }
 
-        KyCongBoDTO kyCongBoDTO = (KyCongBoDTO) o;
-        if (kyCongBoDTO.getId() == null || getId() == null) {
+        DonViTinhDetailDTO donViTinhDTO = (DonViTinhDetailDTO) o;
+        if (donViTinhDTO.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), kyCongBoDTO.getId());
+        return Objects.equals(getId(), donViTinhDTO.getId());
+    }
+
+    public PhamViDetailDTO getPhamvi() {
+        return phamvi;
+    }
+
+    public void setPhamvi(PhamViDetailDTO phamvi) {
+        this.phamvi = phamvi;
     }
 
     @Override
@@ -78,11 +87,11 @@ public class KyCongBoDTO extends AbstractAuditingDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "KyCongBoDTO{" +
+        return "DonViTinhDTO{" +
             "id=" + getId() +
-            ", kyCongBoCode='" + getKyCongBoCode() + "'" +
+            ", donViTinhCode='" + getDonViTinhCode() + "'" +
             ", name='" + getName() + "'" +
-            ", status='" + getStatus() + "'" +
+
             "}";
     }
 }

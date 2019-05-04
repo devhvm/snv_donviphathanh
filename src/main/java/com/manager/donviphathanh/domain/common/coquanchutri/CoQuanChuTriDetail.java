@@ -1,6 +1,4 @@
-package com.manager.donviphathanh.service.dto.common;
-
-import com.manager.donviphathanh.service.dto.StatusDTO;
+package com.manager.donviphathanh.domain.common.coquanchutri;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -9,7 +7,7 @@ import java.util.Objects;
 /**
  * A DTO for the CoQuanChuTri entity.
  */
-public class CoQuanChuTriDTO extends AbstractAuditingDTO implements Serializable {
+public class CoQuanChuTriDetail implements Serializable {
 
     private Long id;
 
@@ -18,10 +16,6 @@ public class CoQuanChuTriDTO extends AbstractAuditingDTO implements Serializable
 
     @NotNull
     private String maDinhDanhCode;
-
-    @NotNull
-    private StatusDTO status;
-
 
     public Long getId() {
         return id;
@@ -47,14 +41,6 @@ public class CoQuanChuTriDTO extends AbstractAuditingDTO implements Serializable
         this.maDinhDanhCode = maDinhDanhCode;
     }
 
-    public StatusDTO getStatus() {
-        return status;
-    }
-
-    public void setStatus(StatusDTO status) {
-        this.status = status;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -64,7 +50,7 @@ public class CoQuanChuTriDTO extends AbstractAuditingDTO implements Serializable
             return false;
         }
 
-        CoQuanChuTriDTO coQuanChuTriDTO = (CoQuanChuTriDTO) o;
+        CoQuanChuTriDetail coQuanChuTriDTO = (CoQuanChuTriDetail) o;
         if (coQuanChuTriDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -82,7 +68,6 @@ public class CoQuanChuTriDTO extends AbstractAuditingDTO implements Serializable
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", maDinhDanhCode='" + getMaDinhDanhCode() + "'" +
-            ", status='" + getStatus() + "'" +
             "}";
     }
 }

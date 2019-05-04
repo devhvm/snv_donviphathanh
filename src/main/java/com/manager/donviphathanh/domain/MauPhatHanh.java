@@ -1,5 +1,7 @@
 package com.manager.donviphathanh.domain;
 
+import com.manager.donviphathanh.domain.common.coquanchutri.TieuChiDetail;
+import com.manager.donviphathanh.domain.common.loaibaocao.LoaiBaoCao;
 import com.manager.donviphathanh.domain.enumeration.Status;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -26,9 +28,9 @@ public class MauPhatHanh extends AbstractAuditingEntity implements Serializable 
     @Field("mau_phat_hanh_code")
     private String mauPhatHanhCode;
 
-    @NotNull
-    @Field("nhom_phan_loai")
-    private CustomType nhomPhanLoai;
+    //@NotNull
+    @Field("loai_bao_cao")
+    private LoaiBaoCao loaiBaoCao;
 
     @NotNull
     @Field("name")
@@ -40,10 +42,10 @@ public class MauPhatHanh extends AbstractAuditingEntity implements Serializable 
 
     @NotNull
     @Field("tieu_chi_mau_phat_hanh")
-    private List<TieuChiMauPhatHanh> tieuChiMauPhatHanhs;
+    private List<TieuChiDetail> tieuChiDetails;
 
     @Field("du_lieu_tien_trinh")
-    private final List<DuLieuTienTrinh> duLieuTienTrinhs = new ArrayList<>();
+    private List<DuLieuTienTrinh> duLieuTienTrinhs = new ArrayList<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not
     // remove
@@ -94,37 +96,29 @@ public class MauPhatHanh extends AbstractAuditingEntity implements Serializable 
         return this;
     }
 
-    public List<TieuChiMauPhatHanh> getTieuChiMauPhatHanhs() {
-        return tieuChiMauPhatHanhs;
-    }
 
-    public void setTieuChiMauPhatHanhs(List<TieuChiMauPhatHanh> tieuChiMauPhatHanhs) {
-        this.tieuChiMauPhatHanhs = tieuChiMauPhatHanhs;
-    }
-
-    public MauPhatHanh tieuChiMauPhatHanhs(List<TieuChiMauPhatHanh> tieuChiMauPhatHanhs) {
-        this.tieuChiMauPhatHanhs = tieuChiMauPhatHanhs;
-        return this;
-    }
-
-    public MauPhatHanh addTieuChiMauPhatHanh(TieuChiMauPhatHanh tieuChiMauPhatHanh) {
-        this.tieuChiMauPhatHanhs.add(tieuChiMauPhatHanh);
-        return this;
-    }
-
-    public MauPhatHanh removeTieuChiMauPhatHanh(TieuChiMauPhatHanh tieuChiMauPhatHanh) {
-        this.tieuChiMauPhatHanhs.remove(tieuChiMauPhatHanh);
-        return this;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
     // setters here, do not remove
 
-    public CustomType getNhomPhanLoai() {
-        return nhomPhanLoai;
+
+    public LoaiBaoCao getLoaiBaoCao() {
+        return loaiBaoCao;
     }
 
-    public void setNhomPhanLoai(CustomType nhomPhanLoai) {
-        this.nhomPhanLoai = nhomPhanLoai;
+    public void setLoaiBaoCao(LoaiBaoCao loaiBaoCao) {
+        this.loaiBaoCao = loaiBaoCao;
+    }
+
+    public List<TieuChiDetail> getTieuChiDetails() {
+        return tieuChiDetails;
+    }
+
+    public void setTieuChiDetails(List<TieuChiDetail> tieuChiDetails) {
+        this.tieuChiDetails = tieuChiDetails;
+    }
+
+    public void setDuLieuTienTrinhs(List<DuLieuTienTrinh> duLieuTienTrinhs) {
+        this.duLieuTienTrinhs = duLieuTienTrinhs;
     }
 
     public List<DuLieuTienTrinh> getDuLieuTienTrinhs() {

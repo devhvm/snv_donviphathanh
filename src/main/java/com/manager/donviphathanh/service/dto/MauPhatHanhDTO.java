@@ -1,10 +1,12 @@
 package com.manager.donviphathanh.service.dto;
 
-import com.manager.donviphathanh.domain.enumeration.Status;
-import com.manager.donviphathanh.service.dto.common.TieuChiDetailDTO;
+import com.manager.donviphathanh.service.dto.common.coquanchutri.TieuChiDetailDTO;
+import com.manager.donviphathanh.service.dto.common.loaibaocao.LoaiBaoCaoDTO;
+import com.manager.donviphathanh.service.dto.quytrinhdonvi.DuLieuTienTrinhDTO;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,16 +20,18 @@ public class MauPhatHanhDTO implements Serializable {
     @NotNull
     private String mauPhatHanhCode;
 
-    private CustomTypeDTO nhomPhanLoai;
+    private LoaiBaoCaoDTO loaiBaoCao;
 
     @NotNull
     private String name;
 
     @NotNull
-    private Status status;
+    private StatusDTO status;
 
     @NotNull
     private List<TieuChiDetailDTO> tieuChiDetails;
+
+    private List<DuLieuTienTrinhDTO> duLieuTienTrinhs = new ArrayList<>();
 
 //    @NotNull
 //    private List<TieuChiMauPhatHanhDTO> tieuChiMauPhatHanhs;
@@ -36,9 +40,9 @@ public class MauPhatHanhDTO implements Serializable {
     public MauPhatHanhDTO() {
     }
 
-    public MauPhatHanhDTO(@NotNull String mauPhatHanhCode, CustomTypeDTO nhomPhanLoai, @NotNull String name, @NotNull Status status, @NotNull List<TieuChiDetailDTO> tieuChiDetails) {
+    public MauPhatHanhDTO(@NotNull String mauPhatHanhCode, LoaiBaoCaoDTO loaiBaoCao, @NotNull String name, @NotNull StatusDTO status, @NotNull List<TieuChiDetailDTO> tieuChiDetails) {
         this.mauPhatHanhCode = mauPhatHanhCode;
-        this.nhomPhanLoai = nhomPhanLoai;
+        this.loaiBaoCao = loaiBaoCao;
         this.name = name;
         this.status = status;
         this.tieuChiDetails = tieuChiDetails;
@@ -60,12 +64,12 @@ public class MauPhatHanhDTO implements Serializable {
         this.mauPhatHanhCode = mauPhatHanhCode;
     }
 
-    public CustomTypeDTO getNhomPhanLoai() {
-        return nhomPhanLoai;
+    public static MauPhatHanhDTO of(CreateMauPhatHanhDTO createMauPhatHanhDTO, LoaiBaoCaoDTO loaiBaoCao, List<TieuChiDetailDTO> tieuChiDetailDTOS) {
+        return new MauPhatHanhDTO(createMauPhatHanhDTO.getMaMauPhatHanh(), loaiBaoCao, createMauPhatHanhDTO.getTenMauPhatHanh(), StatusDTO.NEW, tieuChiDetailDTOS);
     }
 
-    public void setNhomPhanLoai(CustomTypeDTO nhomPhanLoai) {
-        this.nhomPhanLoai = nhomPhanLoai;
+    public LoaiBaoCaoDTO getLoaiBaoCao() {
+        return loaiBaoCao;
     }
 
     public String getName() {
@@ -76,20 +80,28 @@ public class MauPhatHanhDTO implements Serializable {
         this.name = name;
     }
 
-    public Status getStatus() {
+    public void setLoaiBaoCao(LoaiBaoCaoDTO loaiBaoCao) {
+        this.loaiBaoCao = loaiBaoCao;
+    }
+
+    public StatusDTO getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusDTO status) {
         this.status = status;
-    }
-
-    public static MauPhatHanhDTO of(CreateMauPhatHanhDTO createMauPhatHanhDTO, List<TieuChiDetailDTO> tieuChiDetailDTOS) {
-        return new MauPhatHanhDTO(createMauPhatHanhDTO.getMaMauPhatHanh(), null, createMauPhatHanhDTO.getTenMauPhatHanh(), Status.NEW, tieuChiDetailDTOS);
     }
 
     public List<TieuChiDetailDTO> getTieuChiDetails() {
         return tieuChiDetails;
+    }
+
+    public List<DuLieuTienTrinhDTO> getDuLieuTienTrinhs() {
+        return duLieuTienTrinhs;
+    }
+
+    public void setDuLieuTienTrinhs(List<DuLieuTienTrinhDTO> duLieuTienTrinhs) {
+        this.duLieuTienTrinhs = duLieuTienTrinhs;
     }
 
     @Override
@@ -118,7 +130,7 @@ public class MauPhatHanhDTO implements Serializable {
         return "MauPhatHanhDTO{" +
             "id=" + getId() +
             ", mauPhatHanhCode='" + getMauPhatHanhCode() + "'" +
-            ", nhomPhanLoai='" + getNhomPhanLoai() + "'" +
+            ", nhomPhanLoai='" + getLoaiBaoCao() + "'" +
             ", name='" + getName() + "'" +
             ", status='" + getStatus() + "'" +
             "}";
