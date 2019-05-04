@@ -7,7 +7,9 @@ import com.manager.donviphathanh.repository.MauPhatHanhRepository;
 import com.manager.donviphathanh.service.MauPhatHanhService;
 import com.manager.donviphathanh.service.dto.CreateMauPhatHanhDTO;
 import com.manager.donviphathanh.service.dto.MauPhatHanhDTO;
-import com.manager.donviphathanh.service.dto.common.TieuChiDetailDTO;
+import com.manager.donviphathanh.service.dto.common.coquanchutri.TieuChiDetailDTO;
+import com.manager.donviphathanh.service.dto.common.loaibaocao.LoaiBaoCaoDTO;
+import com.manager.donviphathanh.service.dto.common.loaibaocao.PhamViDetailDTO;
 import com.manager.donviphathanh.service.dto.quytrinhdonvi.DuLieuTienTrinhDTO;
 import com.manager.donviphathanh.service.mapper.DuLieuTienTrinhMapper;
 import com.manager.donviphathanh.service.mapper.MauPhatHanhMapper;
@@ -56,6 +58,13 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
     public Optional<MauPhatHanhDTO> create(CreateMauPhatHanhDTO createMauPhatHanhDTO) {
         log.debug("Request to save createMauPhatHanhDTO : {}", createMauPhatHanhDTO);
 
+
+        Optional<MauPhatHanhDTO> mauPH = findOneByMauPhatHanhCode(createMauPhatHanhDTO.getMaMauPhatHanh());
+
+        if (mauPH.isPresent()) {
+            throw new RuntimeException("Ma Mau da ton tai");
+        }
+
         List<TieuChiDetailDTO> tieuChiDetailDTOList;
         //call api common create
         tieuChiDetailDTOList = commonServiceClient.getTieuChisByCoQuanChuTriID(createMauPhatHanhDTO.getIdCoQuanChuTri().longValue());
@@ -64,7 +73,10 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
             throw new ResourceNotFoundException("Không tồn tại danh sách tiêu chi của CQTT này");
         }
 
-        MauPhatHanhDTO mauPhatHanhDTO = MauPhatHanhDTO.of(createMauPhatHanhDTO, tieuChiDetailDTOList);
+        LoaiBaoCaoDTO loaiBaoCaoDTO = commonServiceClient.getLoaiBaoCao(1l);
+        loaiBaoCaoDTO.getDonViTinh().setPhamvi(new PhamViDetailDTO(createMauPhatHanhDTO.getMin(), createMauPhatHanhDTO.getMax()));
+
+        MauPhatHanhDTO mauPhatHanhDTO = MauPhatHanhDTO.of(createMauPhatHanhDTO, loaiBaoCaoDTO, tieuChiDetailDTOList);
 
         MauPhatHanh mauPhatHanh = mauPhatHanhMapper.toEntity(mauPhatHanhDTO);
         mauPhatHanh = mauPhatHanhRepository.save(mauPhatHanh);

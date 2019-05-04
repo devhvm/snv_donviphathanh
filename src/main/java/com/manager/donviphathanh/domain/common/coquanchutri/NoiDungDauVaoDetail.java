@@ -1,4 +1,4 @@
-package com.manager.donviphathanh.service.dto.common;
+package com.manager.donviphathanh.domain.common.coquanchutri;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,13 +8,13 @@ import java.util.Objects;
 /**
  * A DTO for the NoiDungDauRa entity.
  */
-public class NoiDungDauRaDetailDTO implements Serializable {
+public class NoiDungDauVaoDetail implements Serializable {
 
     private String nhomDanhMucCode;
 
     private String nhomDanhMucName;
 
-    private List<DanhMucDetailDTO> danhMucs = new ArrayList();
+    private List<DanhMucDetail> danhMucs = new ArrayList();
 
     public String getNhomDanhMucCode() {
         return nhomDanhMucCode;
@@ -32,11 +32,11 @@ public class NoiDungDauRaDetailDTO implements Serializable {
         this.nhomDanhMucName = nhomDanhMucName;
     }
 
-    public List<DanhMucDetailDTO> getDanhMucs() {
+    public List<DanhMucDetail> getDanhMucs() {
         return danhMucs;
     }
 
-    public void setDanhMucs(List<DanhMucDetailDTO> danhMucs) {
+    public void setDanhMucs(List<DanhMucDetail> danhMucs) {
         this.danhMucs = danhMucs;
     }
 
@@ -49,11 +49,11 @@ public class NoiDungDauRaDetailDTO implements Serializable {
             return false;
         }
 
-        NoiDungDauRaDetailDTO noiDungDauRaDTO = (NoiDungDauRaDetailDTO) o;
-        if (noiDungDauRaDTO.getNhomDanhMucCode() == null || getNhomDanhMucCode() == null) {
+        NoiDungDauVaoDetail noiDungDauVaoDTO = (NoiDungDauVaoDetail) o;
+        if (noiDungDauVaoDTO.getNhomDanhMucCode() == null || getNhomDanhMucCode() == null) {
             return false;
         }
-        return Objects.equals(getNhomDanhMucCode(), noiDungDauRaDTO.getNhomDanhMucCode());
+        return Objects.equals(getNhomDanhMucCode(), noiDungDauVaoDTO.getNhomDanhMucCode());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class NoiDungDauRaDetailDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "NoiDungDauRaDetailDTO{" +
+        return "NoiDungDauVaoDetailDTO{" +
             "nhomDanhMucCode='" + nhomDanhMucCode + '\'' +
             ", nhomDanhMucName='" + nhomDanhMucName + '\'' +
             ", danhMucs=" + danhMucs +

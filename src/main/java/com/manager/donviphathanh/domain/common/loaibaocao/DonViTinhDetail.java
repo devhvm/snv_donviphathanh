@@ -1,6 +1,4 @@
-package com.manager.donviphathanh.service.dto.common;
-
-import com.manager.donviphathanh.service.dto.StatusDTO;
+package com.manager.donviphathanh.domain.common.loaibaocao;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -9,7 +7,7 @@ import java.util.Objects;
 /**
  * A DTO for the DonViTinh entity.
  */
-public class DonViTinhDTO extends AbstractAuditingDTO implements Serializable {
+public class DonViTinhDetail implements Serializable {
 
     private Long id;
 
@@ -19,8 +17,7 @@ public class DonViTinhDTO extends AbstractAuditingDTO implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
-    private StatusDTO status;
+    private PhamViDetail phamvi;
 
 
     public Long getId() {
@@ -47,12 +44,12 @@ public class DonViTinhDTO extends AbstractAuditingDTO implements Serializable {
         this.name = name;
     }
 
-    public StatusDTO getStatus() {
-        return status;
+    public PhamViDetail getPhamvi() {
+        return phamvi;
     }
 
-    public void setStatus(StatusDTO status) {
-        this.status = status;
+    public void setPhamvi(PhamViDetail phamvi) {
+        this.phamvi = phamvi;
     }
 
     @Override
@@ -64,7 +61,7 @@ public class DonViTinhDTO extends AbstractAuditingDTO implements Serializable {
             return false;
         }
 
-        DonViTinhDTO donViTinhDTO = (DonViTinhDTO) o;
+        DonViTinhDetail donViTinhDTO = (DonViTinhDetail) o;
         if (donViTinhDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -82,7 +79,6 @@ public class DonViTinhDTO extends AbstractAuditingDTO implements Serializable {
             "id=" + getId() +
             ", donViTinhCode='" + getDonViTinhCode() + "'" +
             ", name='" + getName() + "'" +
-            ", status='" + getStatus() + "'" +
             "}";
     }
 }

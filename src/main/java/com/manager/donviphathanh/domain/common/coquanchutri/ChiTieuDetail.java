@@ -1,27 +1,26 @@
-package com.manager.donviphathanh.service.dto.common;
-
+package com.manager.donviphathanh.domain.common.coquanchutri;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the DanhMuc entity.
+ * A DTO for the ChiTieu entity.
  */
-public class DanhMucDetailDTO implements Serializable {
+public class ChiTieuDetail implements Serializable {
 
     @NotNull
-    private String danhMucCode;
+    private String chiTieuCode;
 
     @NotNull
     private String name;
 
-    public String getDanhMucCode() {
-        return danhMucCode;
+    public String getChiTieuCode() {
+        return chiTieuCode;
     }
 
-    public void setDanhMucCode(String danhMucCode) {
-        this.danhMucCode = danhMucCode;
+    public void setChiTieuCode(String chiTieuCode) {
+        this.chiTieuCode = chiTieuCode;
     }
 
     public String getName() {
@@ -41,22 +40,22 @@ public class DanhMucDetailDTO implements Serializable {
             return false;
         }
 
-        DanhMucDetailDTO danhMucDTO = (DanhMucDetailDTO) o;
-        if (danhMucDTO.getDanhMucCode() == null || getDanhMucCode() == null) {
+        ChiTieuDetail chiTieuDTO = (ChiTieuDetail) o;
+        if (chiTieuDTO.getChiTieuCode() == null || getChiTieuCode() == null) {
             return false;
         }
-        return Objects.equals(getDanhMucCode(), danhMucDTO.getDanhMucCode());
+        return Objects.equals(getChiTieuCode(), chiTieuDTO.getChiTieuCode());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getDanhMucCode());
+        return Objects.hashCode(getChiTieuCode());
     }
 
     @Override
     public String toString() {
-        return "DanhMucDTO{" +
-            ", danhMucCode='" + getDanhMucCode() + "'" +
+        return "ChiTieuDTO{" +
+            ", chiTieuCode='" + getChiTieuCode() + "'" +
             ", name='" + getName() + "'" +
             "}";
     }

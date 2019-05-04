@@ -130,7 +130,3 @@ jhipster:
 # ===================================================================
 
 # application:
-application:
-    gateway:
-        common: ''
-        quytrinhdonvi: ''

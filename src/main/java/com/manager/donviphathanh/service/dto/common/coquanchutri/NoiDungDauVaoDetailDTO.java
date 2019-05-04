@@ -1,4 +1,4 @@
-package com.manager.donviphathanh.service.dto.common;
+package com.manager.donviphathanh.service.dto.common.coquanchutri;
 
 import java.io.Serializable;
 import java.util.ArrayList;

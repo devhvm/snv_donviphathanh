@@ -1,15 +1,15 @@
-package com.manager.donviphathanh.service.dto.common;
-
-import com.manager.donviphathanh.service.dto.StatusDTO;
+package com.manager.donviphathanh.domain.common.coquanchutri;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * A DTO for the NoiDung entity.
  */
-public class NoiDungDTO extends AbstractAuditingDTO implements Serializable {
+public class NoiDungDetail implements Serializable {
 
     private Long id;
 
@@ -19,11 +19,11 @@ public class NoiDungDTO extends AbstractAuditingDTO implements Serializable {
     @NotNull
     private String name;
 
-    @NotNull
-    private StatusDTO status;
 
+    private List<NoiDungDauVaoDetail> noiDungDauVaos = new ArrayList();
 
-    private Long tieuChiId;
+    private List<NoiDungDauRaDetail> noiDungDauRas = new ArrayList();
+
 
     public Long getId() {
         return id;
@@ -49,20 +49,20 @@ public class NoiDungDTO extends AbstractAuditingDTO implements Serializable {
         this.name = name;
     }
 
-    public StatusDTO getStatus() {
-        return status;
+    public List<NoiDungDauVaoDetail> getNoiDungDauVaos() {
+        return noiDungDauVaos;
     }
 
-    public void setStatus(StatusDTO status) {
-        this.status = status;
+    public void setNoiDungDauVaos(List<NoiDungDauVaoDetail> noiDungDauVaos) {
+        this.noiDungDauVaos = noiDungDauVaos;
     }
 
-    public Long getTieuChiId() {
-        return tieuChiId;
+    public List<NoiDungDauRaDetail> getNoiDungDauRas() {
+        return noiDungDauRas;
     }
 
-    public void setTieuChiId(Long tieuChiId) {
-        this.tieuChiId = tieuChiId;
+    public void setNoiDungDauRas(List<NoiDungDauRaDetail> noiDungDauRas) {
+        this.noiDungDauRas = noiDungDauRas;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class NoiDungDTO extends AbstractAuditingDTO implements Serializable {
             return false;
         }
 
-        NoiDungDTO noiDungDTO = (NoiDungDTO) o;
+        NoiDungDetail noiDungDTO = (NoiDungDetail) o;
         if (noiDungDTO.getId() == null || getId() == null) {
             return false;
         }
@@ -92,8 +92,6 @@ public class NoiDungDTO extends AbstractAuditingDTO implements Serializable {
             "id=" + getId() +
             ", noiDungCode='" + getNoiDungCode() + "'" +
             ", name='" + getName() + "'" +
-            ", status='" + getStatus() + "'" +
-            ", tieuChi=" + getTieuChiId() +
             "}";
     }
 }
