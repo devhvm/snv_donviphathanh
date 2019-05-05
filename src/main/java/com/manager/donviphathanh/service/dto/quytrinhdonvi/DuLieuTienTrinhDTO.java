@@ -38,6 +38,21 @@ public class DuLieuTienTrinhDTO implements Serializable {
     @NotNull
     private StatusDTO status;
 
+    public DuLieuTienTrinhDTO() {
+    }
+
+    public DuLieuTienTrinhDTO(@NotNull String tienTrinhCode, @NotNull String duLieuCode, @NotNull String fromUserId, @NotNull String toUserId, @NotNull String level, String note, Long quyTrinhDonViId, String quyTrinhDonViName, @NotNull StatusDTO status) {
+        this.tienTrinhCode = tienTrinhCode;
+        this.duLieuCode = duLieuCode;
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.level = level;
+        this.note = note;
+        this.quyTrinhDonViId = quyTrinhDonViId;
+        this.quyTrinhDonViName = quyTrinhDonViName;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

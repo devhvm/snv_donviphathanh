@@ -1,9 +1,11 @@
 package com.manager.donviphathanh.service.impl;
 
 import com.manager.donviphathanh.client.CommonServiceClient;
+import com.manager.donviphathanh.client.QuyTrinhDonViServiceClient;
 import com.manager.donviphathanh.domain.DuLieuTienTrinh;
 import com.manager.donviphathanh.domain.MauPhatHanh;
 import com.manager.donviphathanh.repository.MauPhatHanhRepository;
+import com.manager.donviphathanh.security.SecurityUtils;
 import com.manager.donviphathanh.service.MauPhatHanhService;
 import com.manager.donviphathanh.service.dto.CreateMauPhatHanhDTO;
 import com.manager.donviphathanh.service.dto.MauPhatHanhDTO;
@@ -21,6 +23,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -39,6 +42,9 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
     @Autowired
     @Qualifier("common")
     CommonServiceClient commonServiceClient;
+    @Autowired
+    @Qualifier("quytrinhdonvi")
+    QuyTrinhDonViServiceClient quyTrinhDonViServiceClient;
     @Autowired
     DuLieuTienTrinhMapper duLieuTienTrinhMapper;
 
@@ -62,7 +68,7 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
         Optional<MauPhatHanhDTO> mauPH = findOneByMauPhatHanhCode(createMauPhatHanhDTO.getMaMauPhatHanh());
 
         if (mauPH.isPresent()) {
-            throw new RuntimeException("Ma Mau da ton tai");
+
         }
 
         List<TieuChiDetailDTO> tieuChiDetailDTOList;
@@ -72,6 +78,15 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
         if (Objects.isNull(tieuChiDetailDTOList) || tieuChiDetailDTOList.isEmpty()) {
             throw new ResourceNotFoundException("Không tồn tại danh sách tiêu chi của CQTT này");
         }
+        DuLieuTienTrinhDTO duLieuTienTrinhDTO = new DuLieuTienTrinhDTO(createMauPhatHanhDTO.getTienTrinhCode(), createMauPhatHanhDTO.getMaMauPhatHanh(), SecurityUtils.getCurrentUserLogin().get(), "", "", createMauPhatHanhDTO.getNote(), createMauPhatHanhDTO.getQuyTrinhDonViId(), createMauPhatHanhDTO.getQuyTrinhDonViName(), createMauPhatHanhDTO.getStatus());
+
+        try {
+            //call API thêm quy trình
+            quyTrinhDonViServiceClient.createDuLieuTienTrinh(duLieuTienTrinhDTO);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Khong tao duoc quy trinh");
+        }
+
 
         LoaiBaoCaoDTO loaiBaoCaoDTO = commonServiceClient.getLoaiBaoCao(1l);
         loaiBaoCaoDTO.getDonViTinh().setPhamvi(new PhamViDetailDTO(createMauPhatHanhDTO.getMin(), createMauPhatHanhDTO.getMax()));
@@ -79,9 +94,14 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
         MauPhatHanhDTO mauPhatHanhDTO = MauPhatHanhDTO.of(createMauPhatHanhDTO, loaiBaoCaoDTO, tieuChiDetailDTOList);
 
         MauPhatHanh mauPhatHanh = mauPhatHanhMapper.toEntity(mauPhatHanhDTO);
+
+        DuLieuTienTrinh duLieuTienTrinh = duLieuTienTrinhMapper.toEntity(duLieuTienTrinhDTO);
+
+        mauPhatHanh.getDuLieuTienTrinhs().add(duLieuTienTrinh);
+        mauPhatHanh.setStatus(duLieuTienTrinh.getStatus());
+
         mauPhatHanh = mauPhatHanhRepository.save(mauPhatHanh);
 
-        //call API thêm quy trình
 
 
         return Optional.of(mauPhatHanhMapper.toDto(mauPhatHanh));
