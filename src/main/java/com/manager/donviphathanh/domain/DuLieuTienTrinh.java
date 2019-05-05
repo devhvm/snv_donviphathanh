@@ -23,6 +23,9 @@ public class DuLieuTienTrinh implements Serializable {
     private String fromUserId;
 
     @NotNull
+    private String name;
+
+    @NotNull
     private String toUserId;
 
     @NotNull
@@ -117,6 +120,14 @@ public class DuLieuTienTrinh implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
