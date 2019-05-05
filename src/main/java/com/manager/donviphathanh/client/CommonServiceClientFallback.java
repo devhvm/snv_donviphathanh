@@ -12,11 +12,11 @@ public class CommonServiceClientFallback implements CommonServiceClient {
 
     @Override
     public List<TieuChiDetailDTO> getTieuChisByCoQuanChuTriID(Long id) throws RuntimeException {
-        throw new RuntimeException("Khong tao duoc quy trinh");
+        throw new RuntimeException("Loi truy cap service");
     }
 
     @Override
     public LoaiBaoCaoDTO getLoaiBaoCao(Long id) throws RuntimeException {
-        throw new RuntimeException("Khong tao duoc quy trinh");
+        throw new RuntimeException("Loi truy cap service");
     }
 }

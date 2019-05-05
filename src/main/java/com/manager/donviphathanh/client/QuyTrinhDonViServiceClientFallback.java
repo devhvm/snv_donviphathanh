@@ -11,6 +11,6 @@ public class QuyTrinhDonViServiceClientFallback implements QuyTrinhDonViServiceC
 
     @Override
     public DuLieuTienTrinhDTO createDuLieuTienTrinh(@Valid DuLieuTienTrinhDTO duLieuTienTrinhDTO) {
-        throw new RuntimeException("Khong tao duoc quy trinh");
+        throw new RuntimeException("Loi truy cap service");
     }
 }
