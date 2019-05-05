@@ -1,17 +1,31 @@
 package com.manager.donviphathanh.service.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class CreateMauPhatHanhDTO {
 
+    @NotNull
     private String maCoQuanChuTri;
-
+    @NotNull
     private Long idCoQuanChuTri;
-
+    @NotNull
     private String maMauPhatHanh;
-
+    @NotNull
     private String tenMauPhatHanh;
-
+    @NotNull
     private Integer min;
+    @NotNull
     private Integer max;
+    @NotNull
+    private String tienTrinhCode;
+    @NotNull
+    private Long quyTrinhDonViId;
+    @NotNull
+    private String quyTrinhDonViName;
+
+    private StatusDTO status;
+    private String note;
+
 
     public CreateMauPhatHanhDTO() {
     }
@@ -62,5 +76,45 @@ public class CreateMauPhatHanhDTO {
 
     public void setIdCoQuanChuTri(Long idCoQuanChuTri) {
         this.idCoQuanChuTri = idCoQuanChuTri;
+    }
+
+    public String getTienTrinhCode() {
+        return tienTrinhCode;
+    }
+
+    public void setTienTrinhCode(String tienTrinhCode) {
+        this.tienTrinhCode = tienTrinhCode;
+    }
+
+    public Long getQuyTrinhDonViId() {
+        return quyTrinhDonViId;
+    }
+
+    public void setQuyTrinhDonViId(Long quyTrinhDonViId) {
+        this.quyTrinhDonViId = quyTrinhDonViId;
+    }
+
+    public StatusDTO getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusDTO status) {
+        this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getQuyTrinhDonViName() {
+        return quyTrinhDonViName;
+    }
+
+    public void setQuyTrinhDonViName(String quyTrinhDonViName) {
+        this.quyTrinhDonViName = quyTrinhDonViName;
     }
 }
