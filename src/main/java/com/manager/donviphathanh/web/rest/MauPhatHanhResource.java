@@ -26,7 +26,7 @@ public class MauPhatHanhResource {
 
     private final Logger log = LoggerFactory.getLogger(MauPhatHanhResource.class);
 
-    private static final String ENTITY_NAME = "donviphathanhMauPhatHanh";
+    private static final String ENTITY_NAME = "MauPhatHanh";
 
     private final MauPhatHanhService mauPhatHanhService;
 
@@ -55,14 +55,15 @@ public class MauPhatHanhResource {
 
     //feedback
     @PostMapping("/mau-phat-hanh/{mauPhatHanhCode}/cap-nhat-quy-trinh")
-    public ResponseEntity<MauPhatHanhDTO> updateMauPhatHanh(@Valid @RequestBody DuLieuTienTrinhDTO duLieuTienTrinh) throws URISyntaxException {
-        log.debug("REST request to save MauPhatHanh : {}", duLieuTienTrinh);
+    public ResponseEntity<DuLieuTienTrinhDTO> updateMauPhatHanh(@PathVariable String mauPhatHanhCode, @Valid @RequestBody DuLieuTienTrinhDTO duLieuTienTrinh) {
+        log.debug("REST request to save MauPhatHanh : {}", mauPhatHanhCode);
 
-        MauPhatHanhDTO result = mauPhatHanhService.updateQuyTrinh(duLieuTienTrinh).get();
+        DuLieuTienTrinhDTO result = mauPhatHanhService.updateQuyTrinh(mauPhatHanhCode, duLieuTienTrinh).get();
 
-        return ResponseEntity.created(new URI("/api/mau-phat-hanh/" + result.getMauPhatHanhCode()))
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId()))
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("DuLieuTienTrinh", result.getId().toString()))
             .body(result);
+
     }
     /**
      * GET  /mau-phat-hanhs : get all the mauPhatHanhs.

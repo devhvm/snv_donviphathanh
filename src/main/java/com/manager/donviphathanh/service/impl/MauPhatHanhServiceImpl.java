@@ -108,8 +108,8 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
     }
 
     @Override
-    public Optional<MauPhatHanhDTO> updateQuyTrinh(DuLieuTienTrinhDTO duLieuTienTrinhDTO) {
-        Optional<MauPhatHanh> mauPhatHanhOptional = mauPhatHanhRepository.findByMauPhatHanhCode(duLieuTienTrinhDTO.getDuLieuCode());
+    public Optional<DuLieuTienTrinhDTO> updateQuyTrinh(String mauPhatHanhCode, DuLieuTienTrinhDTO duLieuTienTrinhDTO) {
+        Optional<MauPhatHanh> mauPhatHanhOptional = mauPhatHanhRepository.findByMauPhatHanhCode(mauPhatHanhCode);
         if (!mauPhatHanhOptional.isPresent()) throw new ResourceNotFoundException("Mau phat hanh khong ton tai.");
 
         MauPhatHanh mauPhatHanh = mauPhatHanhOptional.get();
@@ -118,9 +118,9 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
 
         mauPhatHanh.getDuLieuTienTrinhs().add(duLieuTienTrinh);
         mauPhatHanh.setStatus(duLieuTienTrinh.getStatus());
-        mauPhatHanh = mauPhatHanhRepository.save(mauPhatHanh);
+        mauPhatHanhRepository.save(mauPhatHanh);
 
-        return Optional.of(mauPhatHanhMapper.toDto(mauPhatHanh));
+        return Optional.of(duLieuTienTrinhMapper.toDto(duLieuTienTrinh));
     }
 
 

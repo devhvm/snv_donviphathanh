@@ -53,7 +53,7 @@ public interface MauPhatHanhService {
 
     Optional<MauPhatHanhDTO> create(CreateMauPhatHanhDTO createMauPhatHanhDTO);
 
-    Optional<MauPhatHanhDTO> updateQuyTrinh(DuLieuTienTrinhDTO duLieuTienTrinh);
+    Optional<DuLieuTienTrinhDTO> updateQuyTrinh(String mauPhatHanhCode, DuLieuTienTrinhDTO duLieuTienTrinh);
 
 
 }

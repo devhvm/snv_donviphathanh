@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * A DTO for the DuLieuTienTrinh entity.
  */
-public class DuLieuTienTrinh implements Serializable {
+public class DuLieuTienTrinh extends AbstractAuditingEntity implements Serializable {
 
     private Long id;
 
