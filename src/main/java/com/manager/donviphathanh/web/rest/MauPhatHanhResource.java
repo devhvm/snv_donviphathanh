@@ -54,7 +54,7 @@ public class MauPhatHanhResource {
     }
 
     //feedback
-    @PostMapping("/mau-phat-hanh/{mauPhatHanhCode}/cap-nhat-quy-trinh")
+    @PutMapping("/mau-phat-hanh/{mauPhatHanhCode}/cap-nhat-quy-trinh")
     public ResponseEntity<DuLieuTienTrinhDTO> updateMauPhatHanh(@PathVariable String mauPhatHanhCode, @Valid @RequestBody DuLieuTienTrinhDTO duLieuTienTrinh) {
         log.debug("REST request to save MauPhatHanh : {}", mauPhatHanhCode);
 
