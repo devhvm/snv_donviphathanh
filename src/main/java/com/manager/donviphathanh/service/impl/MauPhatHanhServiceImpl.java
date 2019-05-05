@@ -78,7 +78,7 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
         if (Objects.isNull(tieuChiDetailDTOList) || tieuChiDetailDTOList.isEmpty()) {
             throw new ResourceNotFoundException("Không tồn tại danh sách tiêu chi của CQTT này");
         }
-        DuLieuTienTrinhDTO duLieuTienTrinhDTO = new DuLieuTienTrinhDTO(createMauPhatHanhDTO.getTenMauPhatHanh(), createMauPhatHanhDTO.getTienTrinhCode(), createMauPhatHanhDTO.getMaMauPhatHanh(), SecurityUtils.getCurrentUserLogin().get(), "", "", createMauPhatHanhDTO.getNote(), createMauPhatHanhDTO.getQuyTrinhDonViId(), createMauPhatHanhDTO.getQuyTrinhDonViName(), createMauPhatHanhDTO.getStatus());
+        DuLieuTienTrinhDTO duLieuTienTrinhDTO = new DuLieuTienTrinhDTO(createMauPhatHanhDTO.getTenMauPhatHanh(), createMauPhatHanhDTO.getTienTrinhCode(), createMauPhatHanhDTO.getMaMauPhatHanh(), SecurityUtils.getCurrentUserLogin().get(), "", createMauPhatHanhDTO.getNote(), createMauPhatHanhDTO.getQuyTrinhDonViId(), createMauPhatHanhDTO.getQuyTrinhDonViName(), createMauPhatHanhDTO.getStatus());
 
         try {
             //call API thêm quy trình

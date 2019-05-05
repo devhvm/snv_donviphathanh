@@ -28,10 +28,6 @@ public class DuLieuTienTrinh extends AbstractAuditingEntity implements Serializa
     @NotNull
     private String toUserId;
 
-    @NotNull
-    private String level;
-
-
     private String note;
 
 
@@ -80,14 +76,6 @@ public class DuLieuTienTrinh extends AbstractAuditingEntity implements Serializa
 
     public void setToUserId(String toUserId) {
         this.toUserId = toUserId;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public String getNote() {
@@ -159,7 +147,6 @@ public class DuLieuTienTrinh extends AbstractAuditingEntity implements Serializa
             ", duLieuCode='" + getDuLieuCode() + "'" +
             ", fromUserId='" + getFromUserId() + "'" +
             ", toUserId='" + getToUserId() + "'" +
-            ", level='" + getLevel() + "'" +
             ", note='" + getNote() + "'" +
             ", quyTrinhDonVi=" + getQuyTrinhDonViId() +
             ", quyTrinhDonVi='" + getQuyTrinhDonViName() + "'" +

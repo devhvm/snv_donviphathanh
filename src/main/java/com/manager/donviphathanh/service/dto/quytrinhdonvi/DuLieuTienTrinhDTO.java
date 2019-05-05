@@ -28,10 +28,6 @@ public class DuLieuTienTrinhDTO implements Serializable {
     @NotNull
     private String toUserId;
 
-    @NotNull
-    private String level;
-
-
     private String note;
 
 
@@ -44,13 +40,12 @@ public class DuLieuTienTrinhDTO implements Serializable {
     public DuLieuTienTrinhDTO() {
     }
 
-    public DuLieuTienTrinhDTO(@NotNull String name, @NotNull String tienTrinhCode, @NotNull String duLieuCode, @NotNull String fromUserId, @NotNull String toUserId, @NotNull String level, String note, Long quyTrinhDonViId, String quyTrinhDonViName, @NotNull StatusDTO status) {
+    public DuLieuTienTrinhDTO(@NotNull String name, @NotNull String tienTrinhCode, @NotNull String duLieuCode, @NotNull String fromUserId, @NotNull String toUserId, String note, Long quyTrinhDonViId, String quyTrinhDonViName, @NotNull StatusDTO status) {
         this.name = name;
         this.tienTrinhCode = tienTrinhCode;
         this.duLieuCode = duLieuCode;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
-        this.level = level;
         this.note = note;
         this.quyTrinhDonViId = quyTrinhDonViId;
         this.quyTrinhDonViName = quyTrinhDonViName;
@@ -95,14 +90,6 @@ public class DuLieuTienTrinhDTO implements Serializable {
 
     public void setToUserId(String toUserId) {
         this.toUserId = toUserId;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public String getNote() {
@@ -174,7 +161,6 @@ public class DuLieuTienTrinhDTO implements Serializable {
             ", duLieuCode='" + getDuLieuCode() + "'" +
             ", fromUserId='" + getFromUserId() + "'" +
             ", toUserId='" + getToUserId() + "'" +
-            ", level='" + getLevel() + "'" +
             ", note='" + getNote() + "'" +
             ", quyTrinhDonVi=" + getQuyTrinhDonViId() +
             ", quyTrinhDonVi='" + getQuyTrinhDonViName() + "'" +
