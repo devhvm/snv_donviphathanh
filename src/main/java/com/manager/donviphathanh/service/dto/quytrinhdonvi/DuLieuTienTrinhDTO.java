@@ -23,6 +23,9 @@ public class DuLieuTienTrinhDTO implements Serializable {
     private String fromUserId;
 
     @NotNull
+    private String name;
+
+    @NotNull
     private String toUserId;
 
     @NotNull
@@ -41,7 +44,8 @@ public class DuLieuTienTrinhDTO implements Serializable {
     public DuLieuTienTrinhDTO() {
     }
 
-    public DuLieuTienTrinhDTO(@NotNull String tienTrinhCode, @NotNull String duLieuCode, @NotNull String fromUserId, @NotNull String toUserId, @NotNull String level, String note, Long quyTrinhDonViId, String quyTrinhDonViName, @NotNull StatusDTO status) {
+    public DuLieuTienTrinhDTO(@NotNull String name, @NotNull String tienTrinhCode, @NotNull String duLieuCode, @NotNull String fromUserId, @NotNull String toUserId, @NotNull String level, String note, Long quyTrinhDonViId, String quyTrinhDonViName, @NotNull StatusDTO status) {
+        this.name = name;
         this.tienTrinhCode = tienTrinhCode;
         this.duLieuCode = duLieuCode;
         this.fromUserId = fromUserId;
@@ -131,6 +135,14 @@ public class DuLieuTienTrinhDTO implements Serializable {
 
     public void setStatus(StatusDTO status) {
         this.status = status;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
