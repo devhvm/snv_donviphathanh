@@ -68,7 +68,7 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
         Optional<MauPhatHanhDTO> mauPH = findOneByMauPhatHanhCode(createMauPhatHanhDTO.getMaMauPhatHanh());
 
         if (mauPH.isPresent()) {
-
+            throw new RuntimeException("Ma Mau da ton tai");
         }
 
         List<TieuChiDetailDTO> tieuChiDetailDTOList;
