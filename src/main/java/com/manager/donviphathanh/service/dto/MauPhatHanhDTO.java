@@ -1,5 +1,6 @@
 package com.manager.donviphathanh.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.manager.donviphathanh.service.dto.common.coquanchutri.TieuChiDetailDTO;
 import com.manager.donviphathanh.service.dto.common.loaibaocao.LoaiBaoCaoDTO;
 import com.manager.donviphathanh.service.dto.quytrinhdonvi.DuLieuTienTrinhDTO;
@@ -13,6 +14,7 @@ import java.util.Objects;
 /**
  * A DTO for the MauPhatHanh entity.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MauPhatHanhDTO implements Serializable {
 
     private String id;

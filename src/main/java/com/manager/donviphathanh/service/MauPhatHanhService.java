@@ -27,6 +27,13 @@ public interface MauPhatHanhService {
      */
     List<MauPhatHanhDTO> findAll();
 
+    /**
+     * Get all the mauPhatHanhs.
+     *
+     * @return the list of entities
+     */
+    List<MauPhatHanhDTO> findAllBySigned();
+
 
     /**
      * Get the "id" mauPhatHanh.

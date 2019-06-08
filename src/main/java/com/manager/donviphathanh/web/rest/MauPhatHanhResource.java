@@ -75,7 +75,16 @@ public class MauPhatHanhResource {
         log.debug("REST request to get all MauPhatHanhs");
         return mauPhatHanhService.findAll();
     }
-
+    /**
+     * GET  /mau-phat-hanhs : get all the mauPhatHanhs.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of mauPhatHanhs in body
+     */
+    @GetMapping("/signed")
+    public List<MauPhatHanhDTO> signed() {
+        log.debug("REST request to get all MauPhatHanhs");
+        return mauPhatHanhService.findAllBySigned();
+    }
     /**
      * GET  /mau-phat-hanh/:code : get the "code" mauPhatHanh.
      *

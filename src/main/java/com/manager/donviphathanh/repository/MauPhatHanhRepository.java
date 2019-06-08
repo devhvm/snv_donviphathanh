@@ -1,10 +1,13 @@
 package com.manager.donviphathanh.repository;
 
 import com.manager.donviphathanh.domain.MauPhatHanh;
+import com.manager.donviphathanh.domain.enumeration.Status;
 import org.springframework.data.mongodb.repository.DeleteQuery;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,4 +22,7 @@ public interface MauPhatHanhRepository extends MongoRepository<MauPhatHanh, Stri
 
     @DeleteQuery
     void deleteByMauPhatHanhCode(String mauPhatHanhCode);
+    @Query(fields="{mauPhatHanhCode : 1}")
+    List<MauPhatHanh> findAllByStatus(Status status);
+
 }
