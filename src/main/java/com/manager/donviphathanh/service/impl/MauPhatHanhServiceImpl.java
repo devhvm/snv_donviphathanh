@@ -4,6 +4,7 @@ import com.manager.donviphathanh.client.CommonServiceClient;
 import com.manager.donviphathanh.client.QuyTrinhDonViServiceClient;
 import com.manager.donviphathanh.domain.DuLieuTienTrinh;
 import com.manager.donviphathanh.domain.MauPhatHanh;
+import com.manager.donviphathanh.domain.enumeration.Status;
 import com.manager.donviphathanh.repository.MauPhatHanhRepository;
 import com.manager.donviphathanh.security.SecurityUtils;
 import com.manager.donviphathanh.service.MauPhatHanhService;
@@ -149,6 +150,14 @@ public class MauPhatHanhServiceImpl implements MauPhatHanhService {
         return mauPhatHanhRepository.findAll().stream()
             .map(mauPhatHanhMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public List<MauPhatHanhDTO> findAllBySigned() {
+        log.debug("Request to get all MauPhatHanhs");
+        return mauPhatHanhRepository.findAllByStatus(Status.SIGNED).stream()
+                .map(mauPhatHanhMapper::toDto)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
 
